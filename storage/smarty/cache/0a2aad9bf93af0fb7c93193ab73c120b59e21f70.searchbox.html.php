@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.31, created on 2017-01-13 09:25:57
+/* Smarty version 3.1.31, created on 2017-01-13 11:46:14
   from "/Applications/MAMP/htdocs/test_project/resources/views/partial/searchbox.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.31',
-  'unifunc' => 'content_58789d25ced659_86312309',
+  'unifunc' => 'content_5878be06ebb513_75086239',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -18,7 +18,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   ),
   'cache_lifetime' => 120,
 ),true)) {
-function content_58789d25ced659_86312309 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5878be06ebb513_75086239 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <section class="box-dvsty row">
 
