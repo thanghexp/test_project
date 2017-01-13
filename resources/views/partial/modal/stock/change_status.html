@@ -1,0 +1,33 @@
+<div id="statusModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <div class="modal-header bg-light-blue">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><b>ステータス変更</b></h4>
+            </div>
+            <form role="form" class="" method="POST">
+                <div class="modal-body">
+                    <p>仕入決定のステータスを変更しますか？<br> 変更する場合は、変更したいステータスをセットして、<br>「変更」ボタンをクリックしてください。</p>
+                    <div class="form-group">
+                        <select class="form-control select2">
+                            <option>未完了</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="btn btn-default btn-block"><b><i class="fa fa-ban margin-r-5"></i>キャンセル</b></a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="#" class="btn btn-primary btn-block"><b><i class="fa fa-save margin-r-5"></i>ステータス変更</b></a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

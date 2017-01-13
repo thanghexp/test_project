@@ -1,0 +1,12 @@
+<!--{if isset($data) && !empty($data)}-->
+<select class="form-control select2" name="<!--{$name|escape|default:''}-->">
+
+    <!--{if isset($default_data) && !empty($default_data)}-->
+        <option value=""><!--{$default_data|escape}--></option>
+    <!--{/if}-->
+
+    <!--{foreach from=$data item=item}-->
+        <option value="<!--{$item.code|escape}-->" <!--{if isset($data_checked.$name) && $data_checked.$name == $item.code}-->selected<!--{/if}-->><!--{$item.value|escape}--></option>
+    <!--{/foreach}-->
+</select>
+<!--{/if}-->

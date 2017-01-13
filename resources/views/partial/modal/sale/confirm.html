@@ -1,0 +1,33 @@
+<div id="confirmModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <div class="modal-header bg-yellow">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><b>完了確認</b></h4>
+            </div>
+
+            <div class="modal-body">
+               <p>販売案件を完了しますか？<br>完了する場合は、「完了」ボタンをクリックしてください。<br>未完了の場合は、「キャンセル」ボタンをクリックしてください。</p>
+            </div>
+
+
+            <div class="modal-footer">
+                <form id="frm-confirm-sale" method="POST" action="/api/sale/handle_confirm_complete">
+
+                    <input type="hidden" name="id" value="<!--{$data.id}-->">
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="javascript:;" data-dismiss="modal" aria-label="Close" class="btn btn-default btn-block"><b><i class="fa fa-ban margin-r-5"></i>キャンセル</b></a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="javascript:;" class="btn btn-warning btn-block x-button-confirm-sale"><b><i class="fa fa-check-circle margin-r-5"></i>完了</b></a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

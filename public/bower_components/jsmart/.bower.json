@@ -1,0 +1,34 @@
+{
+  "name": "jsmart",
+  "homepage": "https://github.com/miroshnikov/jsmart",
+  "authors": [
+    "Max Miroshnikov <miroshnikov@gmail.com>"
+  ],
+  "description": "JavaScript template engine, port of the PHP template engine Smarty to Javascript.",
+  "main": "smart.min.js",
+  "keywords": [
+    "template",
+    "engine",
+    "templating",
+    "smarty",
+    "php"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "98b66e0a35",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "98b66e0a35059b8927bf33f379e578100ae62cc6"
+  },
+  "_source": "https://github.com/miroshnikov/jsmart.git",
+  "_target": "*",
+  "_originalSource": "smarty",
+  "_direct": true
+}

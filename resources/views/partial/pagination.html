@@ -1,0 +1,15 @@
+<!--{if !empty($pagination.total)}-->
+<div class="row">
+    <div class="col-sm-6 col-xs-12 pull-right">
+       <ul class="pagination pagination-sm pull-right">
+            <li <!--{if $pagination.page - 1 <= 0}--> class="disabled" <!--{/if}-->>
+                <a href="<!--{if $pagination.page - 1 <= 0}--> javascript:;<!--{else}-->?<!--{if !empty($pagination.conditions)}--><!--{$pagination.conditions}-->&<!--{/if}-->p=<!--{$pagination.page - 1}--><!--{/if}-->"><b><i class="fa fa-angle-left"></i></b></a>
+            </li>
+
+            <li <!--{if $pagination.page + 1 > $pagination.total_page}--> class="disabled" <!--{/if}-->>
+                <a href="<!--{if $pagination.page + 1 > $pagination.total_page}--> javascript:;<!--{else}-->?<!--{if !empty($pagination.conditions)}--><!--{$pagination.conditions}-->&<!--{/if}-->p=<!--{$pagination.page + 1}--><!--{/if}-->"><b><i class="fa fa-angle-right"></i></b></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--{/if}-->

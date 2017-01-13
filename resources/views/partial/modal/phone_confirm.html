@@ -1,0 +1,27 @@
+<div id="sendPhoneConfirmModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <div class="modal-header bg-yellow">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><b>確認</b></h4>
+            </div>
+            <form id="frm-phone-confirm-send" action="" method="POST">
+                <input type="hidden" name="id" value="<!--{$data.id}-->">
+                <div class="modal-body">
+                    <h5 class="">ステータスを変更しますか？</h5>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-xs-6 form-group">
+                            <a href="javascript:;" class="btn btn-default btn-block" data-dismiss="modal" aria-label="Close"><b><i class="fa fa-ban margin-r-5"></i>キャンセル</b></a>
+                        </div>
+                        <div class="col-xs-6 m-b-10">
+                            <a href="javascript:;" class="btn btn-warning btn-block x-button-send-phone"><b><i class="fa fa-check-circle margin-r-5"></i>OK</b></a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

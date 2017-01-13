@@ -1,0 +1,249 @@
+<div class="row" id="x-list-industrial-waste">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <a href="/industrial_waste/create" class="btn bg-olive btn-flat btn-mobile"><b><i class="fa fa-plus-circle margin-r-5"></i>新規作成</b></a>
+                    <a data-toggle="modal" data-target="#selectDateModal" class="btn btn-primary btn-flat btn-mobile"><b><i class="fa fa-file margin-r-5"></i>CSV</b></a>
+                    <a href="javascript:;" class="btn btn-danger btn-flat btn-mobile x-button-delete-industrial-waste"><b><i class="fa fa-trash margin-r-5"></i>削除</b></a>
+                </div>
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-flat dropdown-toggle btn-mobile" data-toggle="dropdown" aria-expanded="false"><b><!--{if !$list_detail_page }--> ステータス <!--{else}--> 詳細 <!--{/if}--></b>
+                            <span class="fa fa-caret-down m-l-5"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="<!--{if !$list_detail_page }--> active <!--{/if}-->"><a href="/industrial_waste<!--{if !empty(conditions_view)}-->?<!--{$conditions_view}--><!--{/if}-->"><b>ステータス</b></a></li>
+                            <li  class="<!--{if $list_detail_page }--> active <!--{/if}-->"><a href="/industrial_waste?view=list_detail<!--{if !empty($conditions_view)}-->&<!--{$conditions_view}--><!--{/if}-->"><b>詳細</b></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="no-padding">
+
+                    <!--{include file="partial/searchbox.html" page="industrial_waste"
+                        view=$view
+                        config=$pagination
+                        search_field=$search_field
+                        search_value=$search_value
+                        industrial_waste_types=$industrial_waste_types
+                    }-->
+
+                    <!--{*include file='partial/search.html' config=$pagination*}-->
+
+                    <!--{if empty($list_detail_page)}-->
+                       <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"><input type="checkbox" class="minimal checkAll" value=""></th>
+                                    <th class="text-center" style="min-width:120px">引取日
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'take_off_at' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'take_off_at' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="take_off_at"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:120px">引取先名
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'customer' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'customer' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="customer"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:120px">案件名称
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'ticket_name' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'ticket_name' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="ticket_name"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center">引取決定</th>
+                                    <th class="text-center">配送依頼済</th>
+                                    <th class="text-center">引取日連絡</th>
+                                    <th class="text-center">引取詳細決定</th>
+                                    <th class="text-center">搬入完了</th>
+                                    <th class="text-center">数量確定</th>
+                                    <th class="text-center">処理完了</th>
+                                    <th class="text-center">MF返送</th>
+                                    <th class="text-center">メニュー</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <!--{foreach from=$industrial_wastes item=industrial_waste}-->
+                            <tr>
+                            <tr>
+                                <td class="check"><input type="checkbox" name="industrial_waste_id" value="<!--{$industrial_waste.id}-->" class="minimal check"></td>
+                                <td><!--{$industrial_waste.take_off_at|escape|default:''}--></td>
+                                <td class="text-left"><!--{$industrial_waste.client_customer_name|escape|default:''}--></td>
+                                <td class="text-left"><!--{$industrial_waste.ticket_name|escape|default:''}--></td>
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.confirm_taking_over data_id=$industrial_waste.id}-->
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.requested_to_deliver data_id=$industrial_waste.id}-->
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.contact_taking_over_date data_id=$industrial_waste.id}-->
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.contact_taking_over_detail data_id=$industrial_waste.id}-->
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.carrying_in_completion data_id=$industrial_waste.id}-->
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.confirm_quantity data_id=$industrial_waste.id}-->
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.disposal_completed data_id=$industrial_waste.id}-->
+
+                                <!--{include file='industrial_waste/partial/item_definition.html' definition_data=$industrial_waste.definition_data.return_mf data_id=$industrial_waste.id}-->
+
+                                <td>
+                                    <a href="/industrial_waste/copy?id=<!--{$industrial_waste.id}-->" class="btn btn-success btn-flat btn-xs"><b><i class="fa fa-files-o margin-r-5"></i>複製</b></a>&nbsp;
+                                    <a href="/industrial_waste/<!--{$industrial_waste.id}-->" class="btn btn-info btn-flat btn-xs"><b><i class="fa fa-file-text margin-r-5"></i>詳細</b></a>
+                                </td>
+                            </tr>
+                            </tr>
+                            <!--{foreachelse}-->
+                                <!--{include file='partial/list_empty.html' total_column=13}-->
+                            <!--{/foreach}-->
+                            </tbody>
+                            <div class="x-table-overlay">
+                                <div class="overlay">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </div>
+                            </div>
+                        </table>
+                    </div>
+                    <!--{else}-->
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="text-center"><input type="checkbox" class="minimal checkAll" name="industrial_waste_id" value=""></th>
+                                    <th class="text-center" style="min-width:120px">引取日
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'take_off_at' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'take_off_at' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="take_off_at"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:120px">引取先名
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'customer' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'customer' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="customer"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:120px">案件名称
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'ticket_name' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'ticket_name' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="ticket_name"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:190px">マニュフェスト番号
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'manifest_no' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'manifest_no' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="manifest_no"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:120px">産廃種別
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'type' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'type' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="type"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:120px">引取数量
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'quantity' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'quantity' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="quantity"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center" style="min-width:120px">運送会社
+                                        <div class="">
+                                            <a class="sort
+                                             <!--{if $order == 'logistic_customer' && $sort == 'ASC'}-->sorting_asc
+                                             <!--{else if $order == 'logistic_customer' && $sort == 'DESC'}-->sorting_desc
+                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="logistic_customer"></a>
+                                        </div>
+                                    </th>
+                                    <th class="text-center">メニュー</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+
+                                <!--{foreach from=$industrial_wastes item=industrial_waste}-->
+                                <tr>
+                                    <td class="check"><input type="checkbox" name="industrial_waste_id" value="<!--{$industrial_waste.id}-->" class="minimal check"></td>
+                                    <td><!--{$industrial_waste.take_off_at|escape|default:''}--></td>
+                                    <td class="text-left"><!--{$industrial_waste.client_customer_name|escape|default:''}--></td>
+                                    <td class="text-left"><!--{$industrial_waste.ticket_name|escape|default:''}--></td>
+                                    <td class="text-left"><!--{$industrial_waste.manifest_no|escape|default:''}--></td>
+                                    <td><!--{$industrial_waste.type_name|escape|default:''}--></td>
+                                    <td class="text-left"><!--{$industrial_waste.quantity|escape|default:''}--><!--{$industrial_waste.unit|escape|default:''}--></td>
+                                    <td class="text-left"><!--{$industrial_waste.logistic_customer_name|escape|default:''}--></td>
+                                    <td>
+                                        <a href="/industrial_waste/copy?id=<!--{$industrial_waste.id}-->" class="btn btn-success btn-flat btn-xs"><b><i class="fa fa-files-o margin-r-5"></i>複製</b></a>&nbsp;
+                                        <a href="/industrial_waste/detail/<!--{$industrial_waste.id}-->" class="btn btn-info btn-flat btn-xs"><b><i class="fa fa-file-text margin-r-5"></i>詳細</b></a>
+                                    </td>
+                                </tr>
+                                <!--{foreachelse}-->
+                                <!--{include file='partial/list_empty.html' total_column=9}-->
+                                <!--{/foreach}-->
+                                </tbody>
+                                <div class="x-table-overlay">
+                                    <div class="overlay">
+                                        <i class="fa fa-refresh fa-spin"></i>
+                                    </div>
+                                </div>
+                            </table>
+                    </div>
+                    <!--{/if}-->
+
+                    <!--{include file='partial/pagination.html' config=$pagination}-->
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!--{include file='partial/modal/industrial_waste/change_status.html'}-->
+    <!--{include file='partial/modal/select_date.html'
+            title="CSVダウンロード"
+            action="api/industrial_waste/csv"
+            search_field=$search_field
+            search_value=$search_value
+            order=$order
+            sort=$sort
+        }-->
+</div>
+
+<!--{content_for name="headjs"}-->
+<script>
+    $(function () {
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+    });
+</script>
+<script type="text/javascript" src="/js/TEXIS.IndustrialList.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new TEXIS.IndustrialList({
+            el: $('#x-list-industrial-waste')
+        });
+    });
+</script>
+<!--{/content_for}-->

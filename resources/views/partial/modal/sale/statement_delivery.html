@@ -1,0 +1,25 @@
+<div id="note_deliveryModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <div class="modal-header bg-light-blue">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><b>詳細</b></h4>
+            </div>
+
+            <form id="frm-delivery-notice" target="_blank" method="POST" action="/api/sale/handle_note_delivery">
+                <div class="modal-body">
+                    <input type="hidden" name="id" value="<!--{$data.id}-->">
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-offset-3 col-sm-6 col-xs-12">
+                            <a href="javascript:;" class="btn btn-primary btn-block x-button-submit-note-delivery"><b><i class="fa fa-print margin-r-5"></i>印刷</b></a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

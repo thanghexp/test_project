@@ -1,0 +1,59 @@
+<div id="request_deliveryModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <div class="modal-header bg-light-blue">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><b>詳細</b></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <p class="col-xs-4">運送会社</p>
+                    <p class="col-xs-8"><!--{$data.logistic_customer_name|escape|default:''}--></p>
+                </div>
+                <div class="row">
+                    <p class="col-xs-4">品目</p>
+                    <p class="col-xs-8"><!--{$data.product_type_name|escape|default:''}--></p>
+                </div>
+                <div class="row">
+                    <p class="col-xs-4">仕入数量</p>
+                    <p class="col-xs-8"><!--{if !empty($data.purchase_quantity)}--><!--{$data.purchase_quantity|escape|default:''}--><!--{$data.purchase_quantity_name|escape|default:''}--><!--{/if}--></p>
+                </div>
+                <div class="row">
+                    <p class="col-xs-4">運賃</p>
+                    <p class="col-xs-8"><!--{if !empty($data.freight_rate)}--><!--{$data.freight_rate|escape|default:''}-->円<!--{/if}--></p>
+                </div>
+                <div class="row">
+                    <p class="col-xs-4">引取日</p>
+                    <p class="col-xs-8"><!--{$data.take_off_at|escape|default:''}--></p>
+                </div>
+                <div class="row">
+                    <p class="col-xs-4">保管場所</p>
+                    <p class="col-xs-8"><!--{$data.storage_name|escape|default:''}--></p>
+                </div>
+                <div class="row">
+                    <p class="col-xs-4">保管場所備考</p>
+                    <p class="col-xs-8"><!--{$data.storage_note|escape|nl2br|default:''}--></p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <form id="frm-request-delivery" method="POST" action="/api/stock/handle_request_delivery">
+                    <input type="hidden" name="id" value="<!--{$data.id}-->">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12 m-b-10">
+                            <a href="javascript:;" data-method="pdf" class="btn btn-primary btn-block x-button-pdf-request-delivery"><b><i class="fa fa-print margin-r-5"></i>印刷</b></a>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 m-b-10">
+                            <a href="javascript:;" data-method="email" class="btn btn-primary btn-block x-button-email-request-delivery"><b><i class="fa fa-envelope margin-r-5"></i>Email送信</b></a>
+                        </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <a href="javascript:;" data-method="fax" class="btn btn-primary btn-block x-button-fax-request-delivery"><b><i class="fa fa-fax margin-r-5"></i>FAX送信</b></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

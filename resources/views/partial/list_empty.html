@@ -1,0 +1,13 @@
+<!--{if isset($total_column) && !empty($total_column)}-->
+<tr class="text-center">
+    <td colspan="<!--{$total_column}-->">
+        <span class="glyphicon glyphicon-ban-circle"></span>
+        <!--{$errmsg|default:'項目が見つかりませんでした'}-->
+    </td>
+</tr>
+<!--{else}-->
+<div class="no-result-template page-padding">
+    <span class="glyphicon glyphicon-ban-circle"></span>
+    <!--{$errmsg|default:'項目が見つかりませんでした'}-->
+</div>
+<!--{/if}-->
