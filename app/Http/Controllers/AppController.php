@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-require_once (base_path('vendor/smarty/smarty/libs/Smarty.class.php'));
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -18,7 +16,7 @@ class AppController extends Controller
     // Construct
     public function __construct()
     {
-        $this->smarty = new \Smarty();
+        //$this->smarty = new \Smarty();
     }
 
     /**

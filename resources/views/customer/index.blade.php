@@ -13,7 +13,7 @@
 			<div class="box-body">
 				<div class="no-padding">
 
-					@include('partial/searchbox', [
+					@include('partial.searchbox', [
 						'page' => 'customer',
 						'config' => !empty($pagination) ? $pagination : '',
 						'search_value' => !empty($search_value) ? $search_value : ''
@@ -38,19 +38,19 @@
 								 @if(isset($customers))
 									@foreach($customers as $customer)
 									 <tr>
-										 <td class="check"><input type="checkbox" class="minimal check" name="customer_id" value="<!--{$customer.id}-->"></td>
-										 <td class="text-left"><!--{$customer.name|escape|default:''}--></td>
-										 <td><!--{$customer.status_name|escape|default:''}--></td>
-										 <td class="text-left"><!--{$customer.address|escape|default:''}--></td>
-										 <td class="text-left"><!--{phone_number tel=$customer.phone_number|escape}--></td>
-										 <td class="text-left"><!--{phone_number tel=$customer.fax_number|escape}--></td>
-										 <td><!--{$customer.main_charge_name|escape|default:''}--></td>
-										 <td><!--{$customer.main_charge_contact|escape|default:''}--></td>
-										 <td><a href="/customer/<!--{$customer.id}-->" class="btn btn-info btn-flat btn-xs"><b><i class="fa fa-file-text margin-r-5"></i>詳細</b></a></td>
+										 <td class="check"><input type="checkbox" class="minimal check" name="customer_id" value="{{ $customer['id'] }}"></td>
+										 <td class="text-left">{{ $customer['name'] or ''}}</td>
+										 <td>{{ $customer['status'] }}</td>
+										 <td class="text-left">{{ $customer['address'] or '' }}</td>
+										 <td class="text-left">{{ $customer['phone_number'] }}</td>
+										 <td class="text-left">{{ $customer['fax_number'] }}</td>
+										 <td>{{ $customer['main_charge_name'] or '' }}</td>
+										 <td>{{ $customer['main_charge_contact'] or '' }}</td>
+										 <td><a href="/customer/{{ $customer['id'] }}" class="btn btn-info btn-flat btn-xs"><b><i class="fa fa-file-text margin-r-5"></i>詳細</b></a></td>
 									 </tr>
 									 @endforeach
 								 @else
-								 	@include('partial/list_empty', ['total_column' => 9])
+								 	@include('partial.list_empty', ['total_column' => 9])
 								 @endif
 							 </tbody>
 							 <div class="x-table-overlay">

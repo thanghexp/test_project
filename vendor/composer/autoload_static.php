@@ -13,6 +13,7 @@ class ComposerStaticInit1e94c37e16bf0cd038c8739748d1b42f
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
+        'f084d01b0a599f67676cffef638aa95b' => __DIR__ . '/..' . '/smarty/smarty/libs/bootstrap.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
@@ -22,6 +23,10 @@ class ComposerStaticInit1e94c37e16bf0cd038c8739748d1b42f
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'Y' => 
+        array (
+            'Ytake\\LaravelSmarty\\' => 20,
         ),
         'X' => 
         array (
@@ -100,6 +105,10 @@ class ComposerStaticInit1e94c37e16bf0cd038c8739748d1b42f
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'Ytake\\LaravelSmarty\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ytake/laravel-smarty/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -250,6 +259,13 @@ class ComposerStaticInit1e94c37e16bf0cd038c8739748d1b42f
                 0 => __DIR__ . '/..' . '/mockery/mockery/library',
             ),
         ),
+        'L' => 
+        array (
+            'Latrell\\Smarty\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/latrell/smarty/src',
+            ),
+        ),
         'J' => 
         array (
             'JakubOnderka\\PhpConsoleHighlighter' => 
@@ -279,12 +295,16 @@ class ComposerStaticInit1e94c37e16bf0cd038c8739748d1b42f
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Customer' => __DIR__ . '/../..' . '/app/Customer.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AppController' => __DIR__ . '/../..' . '/app/Http/Controllers/AppController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\Customer_controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Customer_controller.php',
+        'App\\Http\\Controllers\\Industrial_waste_controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Industrial_waste_controller.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -1457,6 +1477,8 @@ class ComposerStaticInit1e94c37e16bf0cd038c8739748d1b42f
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'Latrell\\Smarty\\SmartyEngine' => __DIR__ . '/..' . '/latrell/smarty/src/Latrell/Smarty/SmartyEngine.php',
+        'Latrell\\Smarty\\SmartyServiceProvider' => __DIR__ . '/..' . '/latrell/smarty/src/Latrell/Smarty/SmartyServiceProvider.php',
         'League\\Flysystem\\AdapterInterface' => __DIR__ . '/..' . '/league/flysystem/src/AdapterInterface.php',
         'League\\Flysystem\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractAdapter.php',
         'League\\Flysystem\\Adapter\\AbstractFtpAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractFtpAdapter.php',
@@ -3106,6 +3128,22 @@ class ComposerStaticInit1e94c37e16bf0cd038c8739748d1b42f
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
+        'Ytake\\LaravelSmarty\\Cache\\KeyValueStorage' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Cache/KeyValueStorage.php',
+        'Ytake\\LaravelSmarty\\Cache\\Memcached' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Cache/Memcached.php',
+        'Ytake\\LaravelSmarty\\Cache\\Redis' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Cache/Redis.php',
+        'Ytake\\LaravelSmarty\\Cache\\Storage' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Cache/Storage.php',
+        'Ytake\\LaravelSmarty\\Console\\CacheClearCommand' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Console/CacheClearCommand.php',
+        'Ytake\\LaravelSmarty\\Console\\ClearCompiledCommand' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Console/ClearCompiledCommand.php',
+        'Ytake\\LaravelSmarty\\Console\\OptimizeCommand' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Console/OptimizeCommand.php',
+        'Ytake\\LaravelSmarty\\Console\\PackageInfoCommand' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Console/PackageInfoCommand.php',
+        'Ytake\\LaravelSmarty\\Engines\\SmartyEngine' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Engines/SmartyEngine.php',
+        'Ytake\\LaravelSmarty\\Engines\\SmartyTemplate' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Engines/SmartyTemplate.php',
+        'Ytake\\LaravelSmarty\\Exception\\MethodNotFoundException' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Exception/MethodNotFoundException.php',
+        'Ytake\\LaravelSmarty\\Smarty' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/Smarty.php',
+        'Ytake\\LaravelSmarty\\SmartyCompileServiceProvider' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/SmartyCompileServiceProvider.php',
+        'Ytake\\LaravelSmarty\\SmartyConsoleServiceProvider' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/SmartyConsoleServiceProvider.php',
+        'Ytake\\LaravelSmarty\\SmartyFactory' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/SmartyFactory.php',
+        'Ytake\\LaravelSmarty\\SmartyServiceProvider' => __DIR__ . '/..' . '/ytake/laravel-smarty/src/SmartyServiceProvider.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

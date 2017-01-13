@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "76036da3b5b55b91dbe1e1affa01bf9e",
+    "content-hash": "fb996bfb2faceb35f7040ebd0791051f",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -432,6 +432,55 @@
                 "laravel"
             ],
             "time": "2017-01-06T14:33:56+00:00"
+        },
+        {
+            "name": "latrell/smarty",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Latrell/Smarty.git",
+                "reference": "a175381280d75c04b35ac9b76f78838a6a737783"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Latrell/Smarty/zipball/a175381280d75c04b35ac9b76f78838a6a737783",
+                "reference": "a175381280d75c04b35ac9b76f78838a6a737783",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "5.*",
+                "illuminate/config": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0",
+                "smarty/smarty": "3.*@stable"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Latrell\\Smarty\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Latrell Chan",
+                    "email": "i@latrell.me"
+                }
+            ],
+            "description": "This package lets you run Smarty3 on Laravel5 elegantly.",
+            "keywords": [
+                "Smarty 3",
+                "l5",
+                "laravel",
+                "laravel 5",
+                "smarty",
+                "templating",
+                "view"
+            ],
+            "time": "2016-06-14 09:35:09"
         },
         {
             "name": "league/flysystem",
@@ -985,6 +1034,59 @@
                 "uuid"
             ],
             "time": "2016-11-22T19:21:44+00:00"
+        },
+        {
+            "name": "smarty/smarty",
+            "version": "v3.1.31",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty.git",
+                "reference": "c7d42e4a327c402897dd587871434888fde1e7a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/c7d42e4a327c402897dd587871434888fde1e7a9",
+                "reference": "c7d42e4a327c402897dd587871434888fde1e7a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "libs/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Monte Ohrt",
+                    "email": "monte@ohrt.com"
+                },
+                {
+                    "name": "Uwe Tews",
+                    "email": "uwe.tews@googlemail.com"
+                },
+                {
+                    "name": "Rodney Rehm",
+                    "email": "rodney.rehm@medialize.de"
+                }
+            ],
+            "description": "Smarty - the compiling PHP template engine",
+            "homepage": "http://www.smarty.net",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2016-12-14T21:57:25+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1869,6 +1971,76 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
+        },
+        {
+            "name": "ytake/laravel-smarty",
+            "version": "2.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ytake/Laravel.Smarty.git",
+                "reference": "a00befc80607ca547de10710ee458176cc731b9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ytake/Laravel.Smarty/zipball/a00befc80607ca547de10710ee458176cc731b9d",
+                "reference": "a00befc80607ca547de10710ee458176cc731b9d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5.0",
+                "illuminate/console": "~5.0",
+                "illuminate/events": "~5.0",
+                "illuminate/support": "~5.0",
+                "illuminate/view": "~5.0",
+                "php": ">=5.5.9",
+                "smarty/smarty": "~3.1.30"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.11.6",
+                "mockery/mockery": "*",
+                "pdepend/pdepend": "^2.2.4",
+                "phploc/phploc": "*",
+                "phpmd/phpmd": "@stable",
+                "phpmetrics/phpmetrics": "^1.10.0",
+                "phpunit/phpunit": "~4.0|~5.0",
+                "predis/predis": "~1.0",
+                "satooshi/php-coveralls": "*",
+                "sebastian/phpcpd": "*",
+                "sensiolabs/security-checker": "^4.0.0",
+                "squizlabs/php_codesniffer": "~2.7",
+                "symfony/console": "~2.0|~3.0",
+                "symfony/framework-bundle": "~2.0|~3.0"
+            },
+            "suggest": {
+                "ext-memcached": "memcached Template Cache Driver",
+                "predis/predis": "Redis Template Cache Driver"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ytake\\LaravelSmarty\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yuuki Takezawa",
+                    "email": "yuuki.takezawa@comnect.jp.net"
+                }
+            ],
+            "description": "Smarty template engine for Laravel and Lumen",
+            "keywords": [
+                "cache",
+                "laravel",
+                "lumen",
+                "smarty",
+                "template",
+                "view"
+            ],
+            "time": "2016-12-05T16:33:41+00:00"
         }
     ],
     "packages-dev": [
@@ -3450,7 +3622,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "latrell/smarty": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
