@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 
-class AppController extends Controller
+class AppController extends BaseController
 {
     /**
      * Template layout
@@ -102,4 +102,5 @@ class AppController extends Controller
 
         return view($template, $data);
     }
+
 }

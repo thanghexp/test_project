@@ -1,0 +1,21 @@
+ @if( !empty($pagination['total']) )
+<div class="row">
+    <div class="col-sm-6 col-xs-12 pull-right">
+        @if ($pagination['last_page'] > 1)
+            <ul class="pagination pagination-sm pull-right">
+                <li class="{{ ($pagination['current_page'] == 1) ? ' disabled' : '' }}">
+                    <a href="{{ !empty($pagination['prev_page_url']) ? $pagination['prev_page_url'] : 'javascript:;' }}">Previous</a>
+                </li>
+                @for ($i = 1; $i <= $pagination['last_page']; $i++)
+                    <li class="{{ ($pagination['current_page'] == $i) ? ' active' : '' }}">
+                        <a href="{{ url()->current() . '?page=' . $i }}">{{ $i }}</a>
+                    </li>
+                @endfor
+                <li class="{{ ($pagination['current_page'] == $pagination['last_page']) ? ' disabled' : '' }}">
+                    <a href="{{ !empty($pagination['next_page_url']) ? $pagination['next_page_url'] : 'javascript:;' }}" >Next</a>
+                </li> 
+            </ul>
+        @endif
+    </div>
+</div>
+@endif
