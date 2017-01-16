@@ -23,7 +23,7 @@
         $(document).ready(function () {
             var form = new AppCore.Form({
                 el: $('form'),
-                errorObject: $.parseJSON('<!--{$form_errors|json_encode|default:"{}"}-->')
+                errorObject: $.parseJSON('{{$form_errors or '{}'}}')
             });
         });
     })();

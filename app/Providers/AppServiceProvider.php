@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Validator::extend('strength', 'App\Http\CustomValidator@validateStrength');
+        Validator::extend('exist_customer_type', 'App\Http\CustomValidator@validateCheckExistCustomerType');
+
     }
 
     /**
