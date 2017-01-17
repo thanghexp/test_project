@@ -14,11 +14,19 @@ class Customer_controller extends AppController
         // Load model
         $customer = new \App\Customer();
 
-        /** @var object */
+        $deb = $customer->get_list([
+            'where' => ['id' => 5]
+        ]);
+
+        echo '<pre>';
+        print_r($deb->getAttributes()['id']); die;
+
+        /** @var object $res_customer */
         $res_customer = $customer->paginate(5)->toArray();
         
         $data_customers = !empty($res_customer['data']) ? $res_customer['data'] : NULL;
         
+        // Attach main charge name
         $this->_attach_customer_main_charge_name($data_customers);
 
         $data['title'] = 'Customer - List';
