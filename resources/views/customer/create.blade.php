@@ -20,36 +20,40 @@
 								<label>Status<span class="text-danger">※</span></label>
 								<select id="status" class="form-control select2" name="status">
 									@foreach($customer_status AS $status)
-										<option value="{{ $status }}" @if(isset($data_customer['status']) && $data_customer['status'] == $status) selected @endif >{{ $status }}</option>
+										<option value="{{ $status }}" @if(!empty(old('status')) && old('status', !empty($data_customer['status']) ? $data_customer['status'] : '') == $status) selected @endif >{{ $status }}</option>
 									@endforeach
 								</select>
 							</div>
-							@if($errors->has('status')) <p>{{ $errors->login->first('status') }}</p>	@endif
-
+							@if($errors->has('status')) <p>{{ $errors->login->first('status') }}</p> @endif
 
 								<div class="form-group">
 								<label>Take The Lead Type<span class="text-danger">※</span></label>
 								<select name="type[]" class="form-control select2" multiple="multiple" id="type" data-placeholder="Please select the business partner type">
 									@foreach( $customer_types AS $type )
-										<option value="{{$type}}" @if( isset($data_customer['type']) && in_array($type, $data_customer['type']) ) selected @endif>{{ $type }}</option>
+										<option value="{{$type}}" @if(!empty(old('type')) && in_array($type, old('type', !empty($data_customer['type']) ? $data_customser['type'] : NULL )) ) selected @endif>{{ $type }}</option>
 									@endforeach
 								</select>
 							</div>
+							@if($errors->has('type')) <p class="error">{{ $errors->first('type') }}</p> @endif
 
 							<div class="form-group">
 								<label>Name Customer</label>
 								<input id="name" name="name" type="text"
 									   class="form-control"
-									   value="{{ $data_customer['customer_name'] or '' }}"
+									   value="{{ old('name', !empty($data_customer['name']) ? $data_customer['name'] : NULL) }}"
 									   placeholder="Please enter the business partner name">
 							</div>
+							@if($errors->has('name')) <p class="error">{{$errors->first('name')}}</p>@endif
+
 							<div class="form-group">
 								<label>Postal Code</label>
 								<input id="postal_code" name="postal_code" type="text"
 									   class="form-control"
-									   value="{{  $data_customer['postal_code'] or '' }}"
+									   value="{{  old('postal_code', !empty($data_customer['postal_code']) ? $data_customer['postal_code'] : NULL) }}"
 									   placeholder="Please enter zip code without hyphen">
 							</div>
+							@if($errors->has('postal_code')) <p class="error">{{$errors->first('postal_code')}}</p>@endif
+
 							<!--{if empty($edit_data)}-->
 							</div>
 						<div class="col-md-6">
@@ -58,9 +62,10 @@
 								<label>Address</label>
 								<input id="address" name="address" type="text"
 									   class="form-control"
-									   value="{{ $data_customer['address'] or '' }}"
+									   value="{{ old('address', !empty($data_customer['address']) ? $data_customer['address'] : NULL) }}"
 									   placeholder="Please enter all your address">
 							</div>
+							@if($errors->has('address')) <p>{{ $errors->first('address') }}</p> @endif
 							<!--{if !empty($edit_data)}-->
 						</div>
 						<div class="col-md-6">
@@ -70,44 +75,53 @@
 								<label>Phone Number</label>
 								<input id="phone_number" name="phone_number" type="text"
 									   class="form-control"
-									   value="{{  $data_customer['phone_number'] or '' }}"
+									   value="{{  old('postal_code', !empty($data_customer['postal_code']) ? $data_customer['postal_code'] : NULL) }}"
 									   placeholder="Please enter phone number">
 							</div>
+							@if($errors->has('phone_number')) <p>{{ $errors->first('phone_number') }}</p> @endif
+
 							<div class="form-group">
 								<label>FAX Number</label>
 								<input id="fax_number" name="fax_number" type="text"
 									   class="form-control"
-									   value="{{ $data_customer['fax_number'] or '' }}"
+									   value="{{ old('fax_number', !empty($data_customer['fax_number']) ? $data_customer['fax_number'] : NULL) }}"
 									   placeholder="Please enter fax number">
 							</div>
+							@if($errors->has('fax_number')) <p>{{ $errors->first('fax_number') }}</p> @endif
+
 							<div class="form-group">
 								<label>Bill Type</label>
 								<select id="bill_type" name="bill_type" class="form-control select2">
 									<option value="">Please select the payment request type</option>
 									@foreach( $customer_bill_types AS $build )
-										<option value="{{ $build }}" @if( isset($data_customer['bill_type']) && $data_customer['bill_type'] == $build ) selected @endif>{{ $build }}</option>
+										<option value="{{ $build }}" @if( !empty(old('bill_type')) && old('bill_type', !empty($data_customer['bill_type']) ? $data_customer['bill_type'] : NULL) == $build ) selected @endif>{{ $build }}</option>
 									@endforeach
 								</select>
 							</div>
+							@if($errors->has('bill_type')) <p>{{ $errors->first('bill_type') }}</p> @endif
+
 							<!--{if !empty($edit_data)}-->
 							<div class="form-group">
 								<label>Main Charge Name</label>
 								<select id="main_charge" class="form-control select2" name="main_charge">
 									<option value="0">Please select primary contact name</option>
 									@foreach($customer_contacts AS $contact)
-									<option value="{{  $contact['id'] }}" @if( isset($data_customer['main_charge']) && $data_customer['main_charge'] == $contact['id'] )selected @endif>{{ $contact['name'] }}</option>
+									<option value="{{  $contact['id'] }}" @if( !empty(old('main_charge')) && old('main_charge', !empty($data_customer['main_charge']) ? $data_customer['main_charge'] : NULL) == $contact['id'] )selected @endif>{{ $contact['name'] }}</option>
 									@endforeach
 								</select>
 							</div>
+							@if($errors->has('main_charge')) <p>{{ $errors->first('main_charge') }}</p> @endif
+
 							<div class="form-group">
 								<label>Secondary Contact Name</label>
 								<select id="extra_charge" class="form-control select2" name="extra_charge">
 									<option value="0">Please select the name of the secondary representative</option>
 									@foreach($customer_contacts AS $contact)
-										<option value="{{  $contact['id'] }}" @if (isset($data_customer['extra_charge']) && $data_customer['extra_charge'] == $contact['id']) selected @endif>{{ $contact['name'] }}</option>
+										<option value="{{  $contact['id'] }}" @if (!empty(old('extra_charge')) && old('main_charge', !empty($data_customer['extra_charge']) ? $data_customer['extra_charge'] : NULL) == $contact['id']) selected @endif>{{ $contact['name'] }}</option>
 									@endforeach
 								</select>
 							</div>
+							@if($errors->has('extra_charge')) <p>{{ $errors->first('extra_charge') }}</p> @endif
 							<!--{/if}-->
 
 							<div class="form-group">
@@ -115,10 +129,11 @@
 								<select id="account" class="form-control select2" name="account_id">
 									<option value="">Please select the name of the person in charge of environmental texis</option>
 									@foreach($accounts AS $account)
-									<option value="{{  $account['id'] }}" @if(isset($data_customer['account_id']) && $data_customer['account_id'] == $account['id']) selected @endif>{{  $account['name'] }}</option>
+										<option value="{{  $account['id'] }}" @if(isset($data_customer['account_id']) && old('account_id', !empty($data_customer['account_id']) ? $data_customer['account_id'] : NULL) == $account['id']) selected @endif>{{  $account['name'] }}</option>
 									@endforeach
 								</select>
 							</div>
+							@if($errors->has('account_id')) <p>{{ $errors->first('account_id') }}</p> @endif
 
 						</div>
 						<div class="col-md-12">
@@ -126,7 +141,7 @@
 							<label>Remark</label>
 							<textarea id="remark" name="remark" class="form-control"
 									  rows="5"
-									  placeholder="Remarks Please register if there is information">{{$data_customer['remark'] or ''}}</textarea>
+									  placeholder="Remarks Please register if there is information">{{ (old('remark', !empty($data_customer['remark']) ? $data_customer['remark'] : NULL)) }}</textarea>
 						</div>
 						</div>
 					</div>

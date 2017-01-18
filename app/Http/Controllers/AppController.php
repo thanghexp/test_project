@@ -66,7 +66,6 @@ class AppController extends BaseController
     {
         $option = array_merge([
             'header' => TRUE,
-            'status' => 200,
             'submit' => FALSE
         ], $option);
 

@@ -17,12 +17,9 @@ class Customer_controller extends AppController
         // Load model
         $customer = new \App\Customer();
 
-        /** @var array $res_customer  */
-        $res_customer = $customer->paginate(5)->toArray();
+        $customer->get_list();
         
         $data_customers = !empty($res_customer['data']) ? $res_customer['data'] : NULL;
-
-        $this->_attach_customer_main_charge_name($data_customers);
 
         $data['title'] = 'Customer - List';
         $data['customers'] = $data_customers;
@@ -44,9 +41,8 @@ class Customer_controller extends AppController
     /**
      * Register customer
      *
-     *
      */
-    public function create()
+    public function create(Request $request)
     {
         /** @var object $res_master_catalog get list master catalog */
         $res_master_catalog = \App\Master_catalog::get();
@@ -68,6 +64,7 @@ class Customer_controller extends AppController
             if($catalog->type == env('CUSTOMER_BILL_TYPE')) {
                 $customer_bill_types[] = $catalog->code;
             }
+
         }
 
         /** @var $res_customer_contact*/
@@ -86,19 +83,125 @@ class Customer_controller extends AppController
         return view('customer.create', $data);
     }
 
+    /**
+     * Save register of customer
+     */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'customer_name' => 'required',
-            'status' => 'required|exist_customer_type',
-        ]);
+        // Load model
+        $customer = new \App\Customer;
 
-//        if ($validator->fails()) {
-//            return redirect('customer/create')
-//                ->withErrors($validator, 'error')
-//                ->withInput();
-//        }
-        \App\Customer::create($request->all());
+        $params = $request->input();
+        $params['created_by'] = 'admin:1';
+        $params['updated_by'] = 'admin:1';
+
+        $save_customer = \App\Customer::create($params);
+
+        return redirect('customer/detail/' . $save_customer->id);
     }
 
+    /**
+     * View update info customer
+     */
+    public function update($id)
+    {
+        // Load model
+        $customer = new \App\Customer();
+
+        /** @var object $res_customer Get detail customer   */
+        $res_customer = $customer->get()->find((int) $id)->toArray();
+
+        /** @var object $res_master_catalog get list master catalog */
+        $res_master_catalog = \App\Master_catalog::get();
+
+        // Array mapping to master catalog get customer status
+        $customer_status = [];
+        $customer_types = [];
+        $customer_bill_types = [];
+        foreach($res_master_catalog AS $catalog) {
+
+            if($catalog->type == env('CUSTOMER_STATUS')) {
+                $customer_status[] = $catalog->code;
+            }
+
+            if($catalog->type == env('CUSTOMER_TYPE')) {
+                $customer_types[] = $catalog->code;
+            }
+
+            if($catalog->type == env('CUSTOMER_BILL_TYPE')) {
+                $customer_bill_types[] = $catalog->code;
+            }
+
+        }
+
+        /** @var $res_customer_contact*/
+        $data['customer_contacts'] = \App\Customer_contact::get();
+
+        $data['accounts'] = \App\Account::get();
+
+        $data['customer_status'] = $customer_status;
+        $data['customer_types'] = $customer_types;
+        $data['customer_bill_types'] = $customer_bill_types;
+
+        $data['page_title'] = 'Update customer';
+        $data['title'] = 'Update - Customer';
+
+        return view('customer/create');
+    }
+
+    /**
+     * Show detail information of customer
+     */
+    public function detail($id)
+    {
+        if(empty($id)) {
+           return;
+        }
+
+        // Load model
+        $customer = new \App\Customer;
+
+        /** @var object $res_customer Get detail customer   */
+        $res_customer = $customer->get()->find((int) $id)->toArray();
+
+        $res_customer = [$res_customer];
+
+        $this->_attach_customer_main_charge_name($res_customer);
+
+        $data['title'] = 'Customer - detail | ' . env('APP_NAME');
+        $data['data_customer'] = $res_customer[$id];
+
+        return view('customer/detail', $data);
+    }
+
+    /**
+     * Function common for create and update with dropdown
+     */
+    public function _get_dropdown_create_update()
+    {
+        /** @var object $res_master_catalog get list master catalog */
+        $res_master_catalog = \App\Master_catalog::get();
+
+        // Array mapping to master catalog get customer status
+        $customer_status = [];
+        $customer_types = [];
+        $customer_bill_types = [];
+        foreach($res_master_catalog AS $catalog) {
+
+            if($catalog->type == env('CUSTOMER_STATUS')) {
+                $customer_status[] = $catalog->code;
+            }
+
+            if($catalog->type == env('CUSTOMER_TYPE')) {
+                $customer_types[] = $catalog->code;
+            }
+
+            if($catalog->type == env('CUSTOMER_BILL_TYPE')) {
+                $customer_bill_types[] = $catalog->code;
+            }
+
+        }
+
+
+    }
 }

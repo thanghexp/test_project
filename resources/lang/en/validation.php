@@ -94,7 +94,12 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
+    // Custom validation
     'strength' => 'The password :attribute is too weak and must contain one or more uppercase, lowercase, numeric, and special character (!@#$%^&*).',
+    'check_exist_customer_type' => 'The customer type have not choose yet ! ',
+    'check_exist_customer_status' => 'The status have not choose yet !',
+    'check_phone_or_fax_number' => 'The phone number must from 9 to 11 numbers !',
+    'check_postal_code' => 'The postal code must format is number and have hypher (Ex: 123-4567)',
 
     'custom' => [
         'attribute-name' => [
