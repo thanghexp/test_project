@@ -217,7 +217,7 @@ class App_Model extends Model
 
 		$res = [];
 		foreach($data as $key => $value) {
-			$res[$value->id] = $this->build_response($value);
+			$res[$key] = $this->build_response($value);
 		}
 
 		return $res;

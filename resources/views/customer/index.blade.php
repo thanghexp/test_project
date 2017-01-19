@@ -37,9 +37,9 @@
 								 @if(isset($customers))
 									@foreach($customers as $customer)
 									 <tr>
-										 <td class="check"><input type="checkbox" class="minimal check" name="customer_id" value="{{ $customer['id'] }}"></td>
+										 <td class="check"><input type="checkbox" class="minimal check" name="customer_id" value="{{ $customer['id'] or '' }}"></td>
 										 <td class="text-left">{{ $customer['name'] or ''}}</td>
-										 <td>{{ $customer['status'] }}</td>
+										 <td>{{ $customer['status'] or '' }}</td>
 										 <td class="text-left">{{ $customer['address'] or '' }}</td>
 										 <td class="text-left">{{ $customer['phone_number'] }}</td>
 										 <td class="text-left">{{ $customer['fax_number'] }}</td>

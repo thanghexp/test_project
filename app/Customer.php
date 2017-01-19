@@ -45,30 +45,60 @@ class Customer extends Base_Model
 
     /**
      * Function get data of get list
+     *
+     * @return json
      */
-    public function get_list($params = [])
+    public function get_data()
     {
         /** @var Object $res_customer Get list customer  */
         $res_customer = $this->paginate($this->limit);
 
-        $paginate = $res_customer;
+        // Get info for pagination
+        $paginate = $res_customer->toArray();
+        unset($paginate['data']);
+
         $res_customer = $res_customer->all();
 
         // Attach customer to customer contact
         $this->_attach_customer_main_charge_name($res_customer);
 
-        $res_customer = $this->build_responses($res_customer);
+        // Return
+        return $this->true_json(
+            $this->build_responses($res_customer),
+            ['pagination' => $paginate]
+        );
+    }
+
+    /**
+     * Function use for create / update get data
+     *
+     * @param array $params
+     * @internal param String $name
+     * @internal param String $status
+     * @internal param String $type
+     * @internal param String $postal_code
+     * @internal param String $remark
+     * @internal param String $address
+     * @internal param Integer $phone_number
+     * @internal param Integer $fax_number
+     * @internal param Integer $main_charge
+     * @internal param Integer $extra_charge
+     * @internal param Integer
+     *
+     * @return json
+     */
+    public function register_customer($params = [])
+    {
+
+        /**
+         * TODO: return get dropdown for status, type, bill type
+         */
 
         echo '<pre>';
         print_r($res_customer); die;
-        print_r($this->true_json($res_customer)); die;
-
-        // Return
-        return [
-                 'items' => $this->true_json( $this->build_responses($res_customer) ),
-                 'pagination' => $paginate
-            ];
     }
+
+
 
     /**
      * Build response

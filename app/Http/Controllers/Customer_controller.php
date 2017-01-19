@@ -17,22 +17,12 @@ class Customer_controller extends AppController
         // Load model
         $customer = new \App\Customer();
 
-        $customer->get_list();
-        
-        $data_customers = !empty($res_customer['data']) ? $res_customer['data'] : NULL;
+        /** @var array $res_customer Get list customer from Customer Model */
+        $res_customer = $customer->get_data()->getData(TRUE);
 
         $data['title'] = 'Customer - List';
-        $data['customers'] = $data_customers;
-        $data['pagination'] = [
-            'total' =>  !empty($res_customer['total']) ? (int) $res_customer['total'] : 0,
-            'per_page' => $res_customer['per_page'],
-            'current_page' => $res_customer['current_page'],
-            'last_page' => $res_customer['last_page'],
-            'next_page_url' => $res_customer['next_page_url'],
-            'prev_page_url' => $res_customer['prev_page_url'],
-            'from' => $res_customer['from'],
-            'to' => $res_customer['to']
-        ];
+        $data['customers'] = $res_customer['items'];
+        $data['pagination'] = $res_customer['pagination'];
 
         // Load view
         return view('customer.index', $data);
@@ -44,37 +34,36 @@ class Customer_controller extends AppController
      */
     public function create(Request $request)
     {
-        /** @var object $res_master_catalog get list master catalog */
-        $res_master_catalog = \App\Master_catalog::get();
+        /** TODO: message error when validation
+         * TODO:
+         */
 
-        // Array mapping to master catalog get customer status
-        $customer_status = [];
-        $customer_types = [];
-        $customer_bill_types = [];
-        foreach($res_master_catalog AS $catalog) {
-
-            if($catalog->type == env('CUSTOMER_STATUS')) {
-                $customer_status[] = $catalog->code;
-            }
-
-            if($catalog->type == env('CUSTOMER_TYPE')) {
-                $customer_types[] = $catalog->code;
-            }
-
-            if($catalog->type == env('CUSTOMER_BILL_TYPE')) {
-                $customer_bill_types[] = $catalog->code;
-            }
-
-        }
+        // Load model
+        $customer = new \App\Customer();
+        $master_catalog = new \App\Master_catalog();
+        $account = new \App\Account();
+        $customer_contact = new \App\Customer_contact();
 
         /** @var $res_customer_contact*/
-        $data['customer_contacts'] = \App\Customer_contact::get();
+        $data['customer_contacts'] = $customer_contact->get_list_data()->getData(TRUE);
+        $data['accounts'] = $account->get_list_data()->getData(TRUE);
 
-        $data['accounts'] = \App\Account::get();
+        $customer_status = $master_catalog->get_value_master_catalog([
+            'type' => env('CATALOG_CUSTOMER_STATUS')
+        ])->getData(TRUE);
 
-        $data['customer_status'] = $customer_status;
-        $data['customer_types'] = $customer_types;
-        $data['customer_bill_types'] = $customer_bill_types;
+        $customer_type = $master_catalog->get_value_master_catalog([
+            'type' => env('CATALOG_CUSTOMER_TYPE')
+        ])->getData(TRUE);
+
+        $bill_types = $master_catalog->get_value_master_catalog([
+            'type' => env('CATALOG_CUSTOMER_BILL_TYPE')
+        ])->getData(TRUE);
+
+        $data['customer_status'] = $customer_status['items'];
+        $data['customer_types'] = $customer_type['items'];
+        $data['customer_bill_types'] = $bill_types['items'];
+
 
         $data['page_title'] = 'Register customer';
         $data['title'] = 'Register - Customer';
@@ -201,7 +190,6 @@ class Customer_controller extends AppController
             }
 
         }
-
 
     }
 }
