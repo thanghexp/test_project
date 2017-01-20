@@ -21,8 +21,9 @@ class Customer_controller extends AppController
         $res_customer = $customer->get_data()->getData(TRUE);
 
         $data['title'] = 'Customer - List';
-        $data['customers'] = $res_customer['items'];
-        $data['pagination'] = $res_customer['pagination'];
+
+        $data['customers'] = $res_customer['data']['items'];
+        $data['pagination'] = $res_customer['data']['pagination'];
 
         // Load view
         return view('customer.index', $data);
@@ -31,22 +32,18 @@ class Customer_controller extends AppController
     /**
      * Register customer
      *
+     * $param Illuminate\Http\Request $request
      */
-    public function create(Request $request)
+    public function create()
     {
-        /** TODO: message error when validation
-         * TODO:
-         */
-
         // Load model
-        $customer = new \App\Customer();
         $master_catalog = new \App\Master_catalog();
         $account = new \App\Account();
         $customer_contact = new \App\Customer_contact();
 
         /** @var $res_customer_contact*/
-        $data['customer_contacts'] = $customer_contact->get_list_data()->getData(TRUE);
-        $data['accounts'] = $account->get_list_data()->getData(TRUE);
+        $res_customer_contacts = $customer_contact->get_list_data()->getData(TRUE);
+        $res_accounts = $account->get_list_data()->getData(TRUE);
 
         $customer_status = $master_catalog->get_value_master_catalog([
             'type' => env('CATALOG_CUSTOMER_STATUS')
@@ -60,10 +57,12 @@ class Customer_controller extends AppController
             'type' => env('CATALOG_CUSTOMER_BILL_TYPE')
         ])->getData(TRUE);
 
+//        $data['customer_id'] =
         $data['customer_status'] = $customer_status['items'];
         $data['customer_types'] = $customer_type['items'];
         $data['customer_bill_types'] = $bill_types['items'];
-
+        $data['customer_contacts'] = $res_customer_contacts['items'];
+        $data['accounts'] = $res_accounts['items'];
 
         $data['page_title'] = 'Register customer';
         $data['title'] = 'Register - Customer';
@@ -79,12 +78,18 @@ class Customer_controller extends AppController
     {
         // Load model
         $customer = new \App\Customer;
+        $customer_type = new \App\Customer;
 
-        $params = $request->input();
+        $params = $request->all();
         $params['created_by'] = 'admin:1';
         $params['updated_by'] = 'admin:1';
+        $params['account_id'] = 1;
 
-        $save_customer = \App\Customer::create($params);
+        $save_customer = $customer->create($params);
+
+        foreach($params['type'] AS $value) {
+            $customer_type->create(['type' => $value]);
+        }
 
         return redirect('customer/detail/' . $save_customer->id);
     }
@@ -96,100 +101,79 @@ class Customer_controller extends AppController
     {
         // Load model
         $customer = new \App\Customer();
+        $customer_type = new \App\Customer_type();
 
-        /** @var object $res_customer Get detail customer   */
-        $res_customer = $customer->get()->find((int) $id)->toArray();
+        /** @var object $res_customer Get list data of customer */
+        $res_customer = $customer->find($id);
 
-        /** @var object $res_master_catalog get list master catalog */
-        $res_master_catalog = \App\Master_catalog::get();
+        /** @var object $res_customer_type Get list data of customer type */
+        $res_customer_type = $customer_type->get()->all();
 
-        // Array mapping to master catalog get customer status
-        $customer_status = [];
-        $customer_types = [];
-        $customer_bill_types = [];
-        foreach($res_master_catalog AS $catalog) {
-
-            if($catalog->type == env('CUSTOMER_STATUS')) {
-                $customer_status[] = $catalog->code;
+        foreach($res_customer_type as $customer_type) {
+            if($res_customer->id == $customer_type->customer_id) {
+                $res_customer->customer_type[] = $customer_type->type;
             }
-
-            if($catalog->type == env('CUSTOMER_TYPE')) {
-                $customer_types[] = $catalog->code;
-            }
-
-            if($catalog->type == env('CUSTOMER_BILL_TYPE')) {
-                $customer_bill_types[] = $catalog->code;
-            }
-
         }
 
+        echo '<pre>';
+        print_r($res_customer); die;
+
+        $data['data_customer'] = $res_customer;
+
+        // Load model
+        $master_catalog = new \App\Master_catalog();
+        $account = new \App\Account();
+        $customer_contact = new \App\Customer_contact();
+
         /** @var $res_customer_contact*/
-        $data['customer_contacts'] = \App\Customer_contact::get();
+        $res_customer_contacts = $customer_contact->get_list_data()->getData(TRUE);
+        $res_accounts = $account->get_list_data()->getData(TRUE);
 
-        $data['accounts'] = \App\Account::get();
+        $customer_status = $master_catalog->get_value_master_catalog([
+            'type' => env('CATALOG_CUSTOMER_STATUS')
+        ])->getData(TRUE);
 
-        $data['customer_status'] = $customer_status;
-        $data['customer_types'] = $customer_types;
-        $data['customer_bill_types'] = $customer_bill_types;
+        $customer_type = $master_catalog->get_value_master_catalog([
+            'type' => env('CATALOG_CUSTOMER_TYPE')
+        ])->getData(TRUE);
 
-        $data['page_title'] = 'Update customer';
-        $data['title'] = 'Update - Customer';
+        $bill_types = $master_catalog->get_value_master_catalog([
+            'type' => env('CATALOG_CUSTOMER_BILL_TYPE')
+        ])->getData(TRUE);
 
-        return view('customer/create');
+        $data['edit_data'] = TRUE;
+        $data['customer_status'] = $customer_status['items'];
+        $data['customer_types'] = $customer_type['items'];
+        $data['customer_bill_types'] = $bill_types['items'];
+        $data['customer_contacts'] = $res_customer_contacts['items'];
+        $data['accounts'] = $res_accounts['items'];
+
+        $data['page_title'] = 'Register customer';
+        $data['title'] = 'Register - Customer';
+
+        // Load view
+        return view('customer.create', $data);
     }
 
     /**
-     * Show detail information of customer
+     * Get detail information of customer
+     *
+     * $param integer $id
+     *
+     * @return array
      */
     public function detail($id)
     {
-        if(empty($id)) {
-           return;
-        }
-
-        // Load model
         $customer = new \App\Customer;
 
-        /** @var object $res_customer Get detail customer   */
-        $res_customer = $customer->get()->find((int) $id)->toArray();
-
-        $res_customer = [$res_customer];
-
-        $this->_attach_customer_main_charge_name($res_customer);
+        /** @var object $res_customer Get info detail of customer */
+        $res_customer = $customer->get_detail(['id' => (int) $id])
+            ->getData(TRUE);
 
         $data['title'] = 'Customer - detail | ' . env('APP_NAME');
-        $data['data_customer'] = $res_customer[$id];
+        $data['data_customer'] = !empty($res_customer['items']) ? $res_customer['items'] : NULL;
 
         return view('customer/detail', $data);
     }
 
-    /**
-     * Function common for create and update with dropdown
-     */
-    public function _get_dropdown_create_update()
-    {
-        /** @var object $res_master_catalog get list master catalog */
-        $res_master_catalog = \App\Master_catalog::get();
-
-        // Array mapping to master catalog get customer status
-        $customer_status = [];
-        $customer_types = [];
-        $customer_bill_types = [];
-        foreach($res_master_catalog AS $catalog) {
-
-            if($catalog->type == env('CUSTOMER_STATUS')) {
-                $customer_status[] = $catalog->code;
-            }
-
-            if($catalog->type == env('CUSTOMER_TYPE')) {
-                $customer_types[] = $catalog->code;
-            }
-
-            if($catalog->type == env('CUSTOMER_BILL_TYPE')) {
-                $customer_bill_types[] = $catalog->code;
-            }
-
-        }
-
-    }
 }

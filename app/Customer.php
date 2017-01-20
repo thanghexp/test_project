@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Base_Model
 {
-    //
-    public $primary_key = 'id';
-    public $table = 'customer';
-    protected $fillable = [
+    public $fillable = [
         'status',
+        'account_id',
         'name',
         'address',
         'phone_number',
@@ -18,10 +16,12 @@ class Customer extends Base_Model
         'main_charge',
         'extra_charge',
         'postal_code',
-        'account_id',
         'created_at', 'updated_at',
         'created_by', 'updated_by'
     ];
+
+    public $primaryKey = 'id';
+    public $table = 'customer';
 
     protected $limit = 10;
 
@@ -30,11 +30,11 @@ class Customer extends Base_Model
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return Array
+     * @return array
      */
     public function rules(\Illuminate\Http\Request $request) {
         return [
-            'status' => 'required|check_exist_customer_status',
+            'status' => 'required',
             'name' => 'string',
             'phone_number' => 'check_phone_or_fax_number',
             'fax_number' => 'check_phone_or_fax_number',
@@ -44,14 +44,17 @@ class Customer extends Base_Model
     }
 
     /**
-     * Function get data of get list
+     * Function get list data of customer
      *
      * @return json
      */
     public function get_data()
     {
         /** @var Object $res_customer Get list customer  */
-        $res_customer = $this->paginate($this->limit);
+        $res_customer = $this->paginate($this->limit)->toSql();
+
+        echo '<pre>';
+        print_r($res_customer); die;
 
         // Get info for pagination
         $paginate = $res_customer->toArray();
@@ -63,10 +66,44 @@ class Customer extends Base_Model
         $this->_attach_customer_main_charge_name($res_customer);
 
         // Return
-        return $this->true_json(
-            $this->build_responses($res_customer),
-            ['pagination' => $paginate]
-        );
+        return $this->true_json([
+            'items' => $this->build_responses($res_customer),
+            'pagination' => $paginate
+        ]);
+    }
+
+    /**
+     * Function get detail data of customer
+     *
+     * @param array $params
+     * @internal param $id
+     */
+    public function get_detail($params = [])
+    {
+        if(empty($params['id'])) {
+            return;
+        }
+
+        /** @var object $res_customer Get list all */
+        $res_customer = $this->find($params['id']);
+
+        $res_customer = [$res_customer];
+
+        // Attach customer to get main charge name
+        $this->_attach_detail_customer($res_customer);
+
+        return $this->true_json( $this->build_response($res_customer[$params['id']]) );
+    }
+
+    /**
+     * Function get info for update customer
+     *
+     * @param array $params
+     * @return array
+     */
+    public function update_data($id = NULL)
+    {
+
     }
 
     /**
@@ -90,12 +127,6 @@ class Customer extends Base_Model
     public function register_customer($params = [])
     {
 
-        /**
-         * TODO: return get dropdown for status, type, bill type
-         */
-
-        echo '<pre>';
-        print_r($res_customer); die;
     }
 
 

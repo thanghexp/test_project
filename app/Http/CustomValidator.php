@@ -21,7 +21,7 @@ class CustomValidator
     public function check_exist_customer_type($attribute, $value, $parameters)
     {
         $master_catalog = \App\Master_catalog::get()
-            ->where('type' , env('CUSTOMER_TYPE'))
+            ->where('type' , env('CATALOG_CUSTOMER_TYPE'))
             ->toArray();
 
         $data_master_catalog = [];
@@ -29,13 +29,13 @@ class CustomValidator
             $data_master_catalog[] = $item['code'];
         }
 
-        foreach($data_master_catalog AS $item_catalog) {
-            if(in_array($item_catalog, $value)) {
-                return true;
+        foreach($value AS $item) {
+            if(!in_array($item, $data_master_catalog)) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -48,7 +48,7 @@ class CustomValidator
     {
         /** @var array $master_catalog Get list Master catalog */
         $master_catalog = \App\Master_catalog::get()
-            ->where('type' , env('CUSTOMER_STATUS'))
+            ->where('type' , env('CATALOG_CUSTOMER_STATUS'))
             ->toArray();
 
         $data_master_catalog = [];
@@ -56,7 +56,6 @@ class CustomValidator
             $data_master_catalog[] = $item['code'];
         }
         unset($master_catalog);
-
 
         if(in_array($value, $data_master_catalog)) {
             return true;

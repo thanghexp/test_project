@@ -3,19 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Response;
 
 
 class App_Model extends Model
 {
-    //
-    protected $primaryKey = '';
-    protected $table = '';
-
-    /** Construct */
-    public function __construct() {
-    	parent::__construct();
-    }
+	protected $primaryKey = '';
+	protected $table = '';
+	protected $fillable = [];
 
     /**
 	 * Function common
@@ -167,16 +161,13 @@ class App_Model extends Model
 	 *
 	 * @return
 	 */
-	public function true_json($data, $option = [])
+	public function true_json($data = [], $option = [])
 	{
 		$option = array_merge([
-			'status' => FALSE,
+			'status' => TRUE,
 			'submit' => TRUE,
+			'data' => !empty($data) ? $data : null
 		], $option);
-
-		if(is_array($data)) {
-			$option['items'] = $data;
-		}
 
 		return Response()->json($option, 200);
 	}
