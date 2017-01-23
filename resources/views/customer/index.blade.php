@@ -13,11 +13,11 @@
 			<div class="box-body">
 				<div class="no-padding">
 
-					@include('partial.searchbox', [
-						'page' => 'customer',
-						'pagination' => !empty($pagination) ? $pagination : '',
-						'search_value' => !empty($search_value) ? $search_value : ''
-					])
+					{{--@include('partial.searchbox', [--}}
+						{{--'page' => 'customer',--}}
+						{{--'pagination' => !empty($pagination) ? $pagination : '',--}}
+						{{--'search_value' => !empty($search_value) ? $search_value : ''--}}
+					{{--])--}}
 
 					 <div class="table-responsive">
 						 <table class="table table-bordered table-hover">
@@ -45,7 +45,7 @@
 										 <td class="text-left">{{ $customer['fax_number'] }}</td>
 										 <td>{{ $customer['main_charge_name'] or '' }}</td>
 										 <td>{{ $customer['main_charge_contact'] or '' }}</td>
-										 <td><a href="/customer/{{ $customer['id'] }}" class="btn btn-info btn-flat btn-xs"><b><i class="fa fa-file-text margin-r-5"></i>Detail</b></a></td>
+										 <td><a href="/customer/detail/{{ $customer['id'] }}" class="btn btn-info btn-flat btn-xs"><b><i class="fa fa-file-text margin-r-5"></i>Detail</b></a></td>
 									 </tr>
 									 @endforeach
 								 @else

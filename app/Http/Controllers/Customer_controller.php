@@ -12,18 +12,35 @@ class Customer_controller extends AppController
     /**
      * Show list customer
      */
-    public function index()
+    public function index(Request $request)
     {
         // Load model
         $customer = new \App\Customer();
 
+        $get_data = $request->all();
+        $page = isset($get_data['page']) ? $get_data['page'] : 1;
+
+        // Get offset and limit
+        $params = $this->_params($page);
+
         /** @var array $res_customer Get list customer from Customer Model */
-        $res_customer = $customer->get_data()->getData(TRUE);
+        $res_customer = $customer->get_data($params)->getData(TRUE);
 
         $data['title'] = 'Customer - List';
-
         $data['customers'] = $res_customer['data']['items'];
-        $data['pagination'] = $res_customer['data']['pagination'];
+//        $data['pagination'] = $res_customer['data']['pagination'];
+        $total = !empty($res_customer['data']['total']) ? (int) $res_customer['data']['total'] : null;
+
+        $data['pagination'] = [
+            'total' => (int) $total,
+            'per_page' => $total % $params['limit'],
+            'current_page' =>  $page,
+            'prev_page' =>  $page != 1 ? '?page=' . ($page - 1) : null,
+            'next_page' =>   $page != ($total % $params['limit']) ? '?page=' . ($page + 1) : null,
+        ];
+
+
+//        dd($data);
 
         // Load view
         return view('customer.index', $data);
@@ -34,12 +51,32 @@ class Customer_controller extends AppController
      *
      * $param Illuminate\Http\Request $request
      */
-    public function create()
+    public function create($id)
     {
         // Load model
         $master_catalog = new \App\Master_catalog();
         $account = new \App\Account();
         $customer_contact = new \App\Customer_contact();
+        $customer = new \App\Customer();
+        $customer_type = new \App\Customer_type();
+
+        if(!is_null($id) &&  $res_customer = $customer->find($id) ) {
+
+            /** @var object $res_customer_type Get list data of customer type */
+            $res_customer_type = $customer_type->get()->all();
+
+            $data_types = [];
+            foreach ($res_customer_type as $item) {
+                if ($res_customer->id == $item->customer_id) {
+                    $data_types[] = $item->type;
+                }
+            }
+
+            $res_customer->type = $data_types;
+
+            $data['data_customer'] = $res_customer->toArray();
+            $data['edit_data'] = TRUE;
+        }
 
         /** @var $res_customer_contact*/
         $res_customer_contacts = $customer_contact->get_list_data()->getData(TRUE);
@@ -58,11 +95,11 @@ class Customer_controller extends AppController
         ])->getData(TRUE);
 
 //        $data['customer_id'] =
-        $data['customer_status'] = $customer_status['items'];
-        $data['customer_types'] = $customer_type['items'];
-        $data['customer_bill_types'] = $bill_types['items'];
-        $data['customer_contacts'] = $res_customer_contacts['items'];
-        $data['accounts'] = $res_accounts['items'];
+        $data['customer_status'] = $customer_status['data'];
+        $data['customer_types'] = $customer_type['data'];
+        $data['customer_bill_types'] = $bill_types['data'];
+        $data['customer_contacts'] = $res_customer_contacts['data'];
+        $data['accounts'] = $res_accounts['data'];
 
         $data['page_title'] = 'Register customer';
         $data['title'] = 'Register - Customer';
@@ -78,17 +115,16 @@ class Customer_controller extends AppController
     {
         // Load model
         $customer = new \App\Customer;
-        $customer_type = new \App\Customer;
 
         $params = $request->all();
         $params['created_by'] = 'admin:1';
         $params['updated_by'] = 'admin:1';
         $params['account_id'] = 1;
 
-        $save_customer = $customer->create($params);
-
-        foreach($params['type'] AS $value) {
-            $customer_type->create(['type' => $value]);
+        if(isset($params['id'])) {
+            $customer->update_customer($params);
+        } else {
+            $save_customer = $customer->register_customer($params);
         }
 
         return redirect('customer/detail/' . $save_customer->id);
@@ -99,27 +135,6 @@ class Customer_controller extends AppController
      */
     public function update($id)
     {
-        // Load model
-        $customer = new \App\Customer();
-        $customer_type = new \App\Customer_type();
-
-        /** @var object $res_customer Get list data of customer */
-        $res_customer = $customer->find($id);
-
-        /** @var object $res_customer_type Get list data of customer type */
-        $res_customer_type = $customer_type->get()->all();
-
-        foreach($res_customer_type as $customer_type) {
-            if($res_customer->id == $customer_type->customer_id) {
-                $res_customer->customer_type[] = $customer_type->type;
-            }
-        }
-
-        echo '<pre>';
-        print_r($res_customer); die;
-
-        $data['data_customer'] = $res_customer;
-
         // Load model
         $master_catalog = new \App\Master_catalog();
         $account = new \App\Account();
@@ -142,11 +157,11 @@ class Customer_controller extends AppController
         ])->getData(TRUE);
 
         $data['edit_data'] = TRUE;
-        $data['customer_status'] = $customer_status['items'];
-        $data['customer_types'] = $customer_type['items'];
-        $data['customer_bill_types'] = $bill_types['items'];
-        $data['customer_contacts'] = $res_customer_contacts['items'];
-        $data['accounts'] = $res_accounts['items'];
+        $data['customer_status'] = $customer_status['data'];
+        $data['customer_types'] = $customer_type['data'];
+        $data['customer_bill_types'] = $bill_types['data'];
+        $data['customer_contacts'] = $res_customer_contacts['data'];
+        $data['accounts'] = $res_accounts['data'];
 
         $data['page_title'] = 'Register customer';
         $data['title'] = 'Register - Customer';
@@ -164,6 +179,7 @@ class Customer_controller extends AppController
      */
     public function detail($id)
     {
+        // Load model
         $customer = new \App\Customer;
 
         /** @var object $res_customer Get info detail of customer */
@@ -171,7 +187,7 @@ class Customer_controller extends AppController
             ->getData(TRUE);
 
         $data['title'] = 'Customer - detail | ' . env('APP_NAME');
-        $data['data_customer'] = !empty($res_customer['items']) ? $res_customer['items'] : NULL;
+        $data['data_customer'] = !empty($res_customer['data']) ? $res_customer['data'] : NULL;
 
         return view('customer/detail', $data);
     }

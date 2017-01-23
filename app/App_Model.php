@@ -28,10 +28,11 @@ class App_Model extends Model
 	 *
 	 * @return object
      */
-    public function get_list($params = []) 
+    public function get_list($params = [])
     {
 		$target = $this;
-    	// Condition to SELECT
+
+		// Condition to SELECT
     	if(isset($params['select']) && is_array($params['select'])) {
 			$target = $target->select($params['select']);
     	}
@@ -73,7 +74,7 @@ class App_Model extends Model
     	}
 
     	// Condition to OFFSET 
-    	if(isset($params['offset']) && !empty($params['offset'])) {
+    	if(isset($params['offset'])) {
 			$target = $target->skip($params['offset']);
     	}
 

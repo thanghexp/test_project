@@ -20,7 +20,7 @@
 								<label>Status<span class="text-danger">※</span></label>
 								<select id="status" class="form-control select2" name="status">
 									@foreach($customer_status AS $status)
-										<option value="{{ $status['code'] }}" @if(!empty(old('status')) && old('status', !empty($data_customer['status']) ? $data_customer['status'] : '') == $status) selected @endif >{{ $status['code'] }}</option>
+										<option value="{{ $status['code'] }}" @if(old('status', !empty($data_customer['status']) ? $data_customer['status'] : '') == $status) selected @endif >{{ $status['code'] }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -30,7 +30,7 @@
 								<label>Take The Lead Type<span class="text-danger">※</span></label>
 								<select name="type[]" class="form-control select2" multiple="multiple" id="type" data-placeholder="Please select the business partner type">
 									@foreach( $customer_types AS $type )
-										<option value="{{$type['code']}}" @if(!empty(old('type')) && in_array($type['code'], old('type', !empty($data_customer['code']) ? $data_customer['code'] : NULL )) ) selected @endif>{{ $type['code'] }}</option>
+										<option value="{{$type['code']}}" @if( !empty(old('type')) || in_array($type['code'], !empty($data_customer['type']) ? $data_customer['type'] : []) ) selected @endif>{{ $type['code'] }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -94,7 +94,7 @@
 								<select id="bill_type" name="bill_type" class="form-control select2">
 									<option value="">Please select the payment request type</option>
 									@foreach( $customer_bill_types AS $build )
-										<option value="{{ $build['value'] }}" @if( !empty(old('bill_type')) && old('bill_type', !empty($data_customer['bill_type']) ? $data_customer['bill_type'] : NULL) == $build['value'] ) selected @endif>{{ $build['value'] }}</option>
+										<option value="{{ $build['value'] }}" @if(old('bill_type', !empty($data_customer['bill_type']) ? $data_customer['bill_type'] : NULL) == $build['value'] ) selected @endif>{{ $build['value'] }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -106,7 +106,7 @@
 									<select id="main_charge" class="form-control select2" name="main_charge">
 										<option value="0">Please select primary contact name</option>
 										@foreach($customer_contacts AS $contact)
-											<option value="{{  $contact['id'] }}" @if( !empty(old('main_charge')) && old('main_charge', !empty($data_customer['main_charge']) ? $data_customer['main_charge'] : NULL) == $contact['id'] )selected @endif>{{ $contact['name'] }}</option>
+											<option value="{{ $contact['id'] }}" @if(old('main_charge', !empty($data_customer['main_charge']) ? $data_customer['main_charge'] : NULL) == $contact['id'] )selected @endif>{{ $contact['name'] }}</option>
 										@endforeach
 									</select>
 								</div>
@@ -117,7 +117,7 @@
 									<select id="extra_charge" class="form-control select2" name="extra_charge">
 										<option value="0">Please select the name of the secondary representative</option>
 										@foreach($customer_contacts AS $contact)
-											<option value="{{  $contact['id'] }}" @if (!empty(old('extra_charge')) && old('main_charge', !empty($data_customer['extra_charge']) ? $data_customer['extra_charge'] : NULL) == $contact['id']) selected @endif>{{ $contact['name'] }}</option>
+											<option value="{{  $contact['id'] }}" @if (old('extra_charge', !empty($data_customer['extra_charge']) ? $data_customer['extra_charge'] : NULL) == $contact['id']) selected @endif>{{ $contact['name'] }}</option>
 										@endforeach
 									</select>
 								</div>
@@ -129,7 +129,7 @@
 								<select id="account" class="form-control select2" name="account_id">
 									<option value="">Please select the name of the person in charge of environmental texis</option>
 									@foreach($accounts AS $account)
-										<option value="{{  $account['id'] }}" @if(isset($data_customer['account_id']) && old('account_id', !empty($data_customer['account_id']) ? $data_customer['account_id'] : NULL) == $account['id']) selected @endif>{{  $account['name'] }}</option>$a
+										<option value="{{  $account['id'] }}" @if(old('account_id', !empty($data_customer['account_id']) ? $data_customer['account_id'] : NULL) == $account['id']) selected @endif>{{  $account['name'] }}</option>$a
 									@endforeach
 								</select>
 							</div>

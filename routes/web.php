@@ -17,8 +17,8 @@ Route::get('/', function () {
 
 /** Route CUSTOMER*/
 Route::get('customer', 'Customer_controller@index');
-Route::get('customer/create', 'Customer_controller@create');
-Route::get('customer/{id}/edit/', 'Customer_controller@update');
+Route::get('customer/create', 'Customer_controller@crZate');
+Route::get('customer/{id}/edit/', 'Customer_controller@create');
 Route::post('customer/store', 'Customer_controller@store')->middleware('validator:App\Customer');
 Route::get('customer/detail/{id}', 'Customer_controller@detail');
 

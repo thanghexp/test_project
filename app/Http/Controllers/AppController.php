@@ -13,6 +13,10 @@ class AppController extends BaseController
      */
     public $layout = '';
 
+    // Set default offset && limit
+    public $offset = 0;
+    public $limit = 10;
+
     // Construct
     public function __construct()
     {
@@ -22,9 +26,12 @@ class AppController extends BaseController
     /**
      * Setting limit and offset
      */
-    public function _params($offset = 10, $limit = 0)
+    public function _params($page = 0)
     {
-
+        return [
+            'offset' => isset($page) ? (int) (($page - 1) * $this->limit) : $this->limit,
+            'limit' => $this->limit
+        ];
     }
 
     /**
