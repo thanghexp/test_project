@@ -94,17 +94,6 @@ class Customer extends Base_Model
     }
 
     /**
-     * Function get info for update customer
-     *
-     * @param array $params
-     * @return array
-     */
-    public function update_data($id = NULL)
-    {
-
-    }
-
-    /**
      * Function use for create / update get data
      *
      * @param array $params
@@ -144,7 +133,7 @@ class Customer extends Base_Model
                     'extra_charge' => !empty($params['extra_charge']) ? $params['extra_charge'] : null,
                     'created_by' => !empty($params['created_by']) ? $params['created_by'] : null,
                     'updated_by' => !empty($params['updated_by']) ? $params['updated_by'] : null,
-                    'bill_type' => !empty($params['bill_type']) ? $params['bil_type'] : null
+                    'bill_type' => !empty($params['bill_type']) ? $params['bill_type'] : null
                 ]);
 
                 // Save customer type
@@ -171,12 +160,15 @@ class Customer extends Base_Model
 
                 DB::commit();
 
-            }, 5);
+                return $new_customer->id;
+            });
 
         } catch (Exception $e) {
             DB::rollback();
         }
 
+        // Return  
+        return FALSE;
     }
 
     /**
@@ -226,23 +218,28 @@ class Customer extends Base_Model
                     // Get @var object $res_customer_type exist in customer_type table
                     $res_customer_type = $customer_type_model->get_list([
                         'where' => [
-                            'id' => $params['id']
+                            'customer_id' => $params['id']
                         ]
-                    ])->all();
+                    ]);
+
+                    $res_customer_type = !empty($res_customer_type) ? $res_customer_type : [];
 
                     // Check $res_customer_type have not exist in  $params
-                    foreach ($res_customer_type AS $type) {
-                        if (!in_array($type, $params['type'])) {
-                            $customer_type_model->delete()->where([
-                                'customer_id' => (int)$params['id'],
-                                'type' => !empty($type) ? $type : null,
-                            ]);
+                    $data_customer_type;
+                    foreach ($res_customer_type AS $value) {
+                        if (!in_array($value->type, $params['type'])) {
+                            $customer_type_model->where([
+                                'customer_id' => (int) $params['id'],
+                                'type' => !empty($value->type) ? $value->type : null,
+                            ])
+                            ->delete();
                         }
+                        $data_customer_type[] = !empty($value->type) ? $value->type : null;
                     }
 
                     // Check $param have not exist in $res_customer_type
                     foreach ($params['type'] AS $type) {
-                        if (!in_array($type, $res_customer_type)) {
+                        if (!in_array($type, $data_customer_type)) {
                             $customer_type_model->create([
                                 'customer_id' => (int)$params['id'],
                                 'type' => !empty($type) ? $type : null,
@@ -251,18 +248,9 @@ class Customer extends Base_Model
                     }
                 }
 
-
-
-                // =>
-                // <= case 1:   create new customer type
-                // <= case 2:
-                // case : have data but remove some type
-
-
-
                 // Save write log Time line
                 $action_history_model->create([
-                    'target_id' => $new_customer->id,
+                    'target_id' => $params['id'],
                     'action' => env('ACTION_UPDATE'),
                     'account_id' => 1,
                     'object' => env('OBJECT_CUSTOMER'),
@@ -276,7 +264,7 @@ class Customer extends Base_Model
 
                 DB::commit();
 
-            }, 5);
+            });
 
         } catch (Exception $e) {
             DB::rollback();

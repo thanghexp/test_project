@@ -33,7 +33,7 @@ class Customer_controller extends AppController
 
         $data['pagination'] = [
             'total' => (int) $total,
-            'per_page' => $total % $params['limit'],
+            'per_page' => ($total > $params) ? ($total % $params['limit'])  : 1,
             'current_page' =>  $page,
             'prev_page' =>  $page != 1 ? '?page=' . ($page - 1) : null,
             'next_page' =>   $page != ($total % $params['limit']) ? '?page=' . ($page + 1) : null,
@@ -51,7 +51,7 @@ class Customer_controller extends AppController
      *
      * $param Illuminate\Http\Request $request
      */
-    public function create($id)
+    public function create($id = null)
     {
         // Load model
         $master_catalog = new \App\Master_catalog();
@@ -94,7 +94,6 @@ class Customer_controller extends AppController
             'type' => env('CATALOG_CUSTOMER_BILL_TYPE')
         ])->getData(TRUE);
 
-//        $data['customer_id'] =
         $data['customer_status'] = $customer_status['data'];
         $data['customer_types'] = $customer_type['data'];
         $data['customer_bill_types'] = $bill_types['data'];
@@ -106,6 +105,16 @@ class Customer_controller extends AppController
 
         // Load view
         return view('customer.create', $data);
+    }
+
+    /**
+     * Create new location 
+     *  
+     */
+    public function create_location($id = null)
+    {
+        $data['title'] = 'Create location' . env('APP_NAME');
+        return view('customer.create_location', $data);
     }
 
     /**
@@ -124,10 +133,10 @@ class Customer_controller extends AppController
         if(isset($params['id'])) {
             $customer->update_customer($params);
         } else {
-            $save_customer = $customer->register_customer($params);
+            $new_id = $customer->save_customer($params);
         }
 
-        return redirect('customer/detail/' . $save_customer->id);
+        return redirect('customer/detail/' . (isset($new_id) ? $new_id : $params['id'] ));
     }
 
     /**

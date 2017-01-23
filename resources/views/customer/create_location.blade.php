@@ -1,3 +1,6 @@
+@extends('layouts.base')
+
+@section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
@@ -12,7 +15,7 @@
                             <input type="hidden" name="customer_id" value="<!--{$customer_id}-->">
 
                             <div class="form-group">
-                                <label>ステータス<span class="text-danger">※</span></label>
+                                <label>Status<span class="text-danger">※</span></label>
                                 <select class="form-control select2" id="status" name="status">
                                     <!--{foreach from=$location_status item=status}-->
                                     <option value="<!--{$status.code|escape}-->" <!--{if isset($data_location.status) && $data_location.status==$status.code}-->selected<!--{/if}-->><!--{$status.value|escape|default:''}--></option>
@@ -20,7 +23,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>拠点名<span class="text-danger">※</span></label>
+                                <label>Name website<span class="text-danger">※</span></label>
                                 <input type="text" class="form-control"
                                        id="site_name"
                                        name="site_name"
@@ -28,7 +31,7 @@
                                        placeholder="拠点名を入力してください">
                             </div>
                             <div class="form-group">
-                                <label>郵便番号</label>
+                                <label>Postal code</label>
                                 <input type="text" class="form-control"
                                        id="postal_code"
                                        name="postal_code"
@@ -36,7 +39,7 @@
                                        placeholder="郵便番号をハイフン無しで入力してください">
                             </div>
                             <div class="form-group">
-                                <label>住所</label>
+                                <label>Address</label>
                                 <input type="text" class="form-control"
                                        id="address"
                                        name="address"
@@ -44,7 +47,7 @@
                                        placeholder="住所をすべて入力してください">
                             </div>
                             <div class="form-group">
-                                <label>電話番号</label>
+                                <label>Phone number</label>
                                 <input type="text" class="form-control"
                                        id="phone_number"
                                        name="phone_number"
@@ -52,7 +55,7 @@
                                        placeholder="電話番号を入力してください">
                             </div>
                             <div class="form-group">
-                                <label>FAX番号</label>
+                                <label>Fax number</label>
                                 <input type="text" class="form-control"
                                        id="fax_number"
                                        name="fax_number"
@@ -60,18 +63,18 @@
                                        placeholder="ファックスを入力してください。">
                             </div>
                             <div class="form-group">
-                                <label>主担当者名</label>
+                                <label>Main charge</label>
                                 <select class="form-control select2" id="main_charge" name="main_charge">
-                                    <option value="">主担当者名を選択してください</option>
+                                    <option value="">Please choose main charge name</option>
                                     <!--{foreach from=$customer_contacts item=contact}-->
                                     <option value="<!--{$contact.id|escape}-->" <!--{if isset($data_location.main_charge) && $data_location.main_charge == $contact.id}-->selected<!--{/if}-->><!--{$contact.name|escape}--></option>
                                     <!--{/foreach}-->
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>副担当者名</label>
+                                <label>Extra charge</label>
                                 <select class="form-control select2" id="extra_charge" name="extra_charge">
-                                    <option value="">副担当者名を選択してください</option>
+                                    <option value="">Please choose person secondary reponsility</option>
                                     <!--{foreach from=$customer_contacts item=contact}-->
                                     <option value="<!--{$contact.id|escape}-->" <!--{if isset($data_location.extra_charge) && $data_location.extra_charge == $contact.id}-->selected<!--{/if}-->><!--{$contact.name|escape}--></option>
                                     <!--{/foreach}-->
@@ -80,7 +83,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>商品情報</label>
+                                <label>Product info</label>
                                 <input type="text" class="form-control"
                                        id="product_info"
                                        name="product_info"
@@ -88,7 +91,7 @@
                                        placeholder="取扱商品情報を入力してください">
                             </div>
                             <div class="form-group">
-                                <label>発生量または消費量</label>
+                                <label>Consumption</label>
                                 <input type="text" class="form-control"
                                        id="consumption"
                                        name="consumption"
@@ -96,7 +99,7 @@
                                        placeholder="発生量または消費量を入力してください">
                             </div>
                             <div class="form-group">
-                                <label>現在の取引単価</label>
+                                <label>Trading unit price</label>
                                 <input type="text" class="form-control"
                                        id="trading_unit_price"
                                        name="trading_unit_price"
@@ -104,7 +107,7 @@
                                        placeholder="現在の取引単価を入力してください">
                             </div>
                             <div class="form-group">
-                                <label>フォークリフト有無</label>
+                                <label>Forklift</label>
                                 <input type="text" class="form-control"
                                        id="forklift"
                                        name="forklift"
@@ -112,7 +115,7 @@
                                        placeholder="フォークリフトの有無を入力してください">
                             </div>
                             <div class="form-group">
-                                <label>備考</label>
+                                <label>Remark</label>
                                 <textarea class="form-control"
                                           rows="8"
                                           id="remark"
@@ -125,10 +128,10 @@
                 <div class="box-footer">
                    <div class="row">
                        <div class="col-md-3 col-sm-4 col-xs-6 col-md-offset-3 col-sm-offset-2">
-                           <a id="x-button-cancel" href="/customer/<!--{$customer_id|default:''}-->" class="btn btn-block btn-default"><b><i class="fa fa-ban margin-r-5"></i>キャンセル</b></a>
+                           <a id="x-button-cancel" href="/customer/<!--{$customer_id|default:''}-->" class="btn btn-block btn-default"><b><i class="fa fa-ban margin-r-5"></i>Cancel</b></a>
                        </div>
                        <div class="col-md-3 col-sm-4 col-xs-6">
-                           <button type="submit" class="btn btn-block btn-primary"><b><i class="fa fa-save margin-r-5"></i>保存</b></button>
+                           <button type="submit" class="btn btn-block btn-primary"><b><i class="fa fa-save margin-r-5"></i>Save</b></button>
                        </div>
                    </div>
                 </div>
@@ -136,3 +139,4 @@
         </div>
     </div>
 </div>
+@endsection

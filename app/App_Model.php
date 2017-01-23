@@ -95,7 +95,7 @@ class App_Model extends Model
 			$target = $target->groupBy($params['group_by']);
     	}
 
-    	return $target->get();
+    	return $target->get()->all();
     }
 
     /**
