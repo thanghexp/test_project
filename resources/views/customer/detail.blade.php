@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <!--{include file='customer/partial/list_location.html' locations=$data_customer.locations}-->
+                @include('customer/partial/list_location', ['locations' => $data_customer['customer_locations'] ] )
             </div>
         </div>
         <div class="box box-primary">
@@ -77,6 +77,7 @@
                 </div>
             </div>
             <div class="box-body">
+                @include('customer/partial/list_contact', ['contacts' => $data_customer['customer_contacts']] )
                 <!--{include file='customer/partial/list_contact.html' contacts=$data_customer.contacts}-->
             </div>
         </div>

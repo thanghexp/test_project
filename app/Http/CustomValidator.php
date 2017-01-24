@@ -18,8 +18,34 @@ class CustomValidator
      *
      * @return bool
      */
+    public function check_exist_customer_contact($attribute, $value, $parameters) {
+        // Load model
+        $customer_contact_model = new \App\Customer_contact();
+
+        // Get @var Object $master_catalog Get list data from customer contact table
+        $res_customer_contact = $customer_contact_model->get_list_data();
+
+        $data_customer_contacts = [];
+        foreach($res_customer_contact AS $customer_contact) {
+            $data_customer_contacts[] = $customer_contact->id;
+        }
+
+        if(!in_array($value, $data_customer_contacts)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Function validate customer type have exist
+     * @param string @value
+     *
+     * @return bool
+     */
     public function check_exist_customer_type($attribute, $value, $parameters)
     {
+        // Get @var Object $master_catalog Get list data from master catalog table
         $master_catalog = \App\Master_catalog::get()
             ->where('type' , env('CATALOG_CUSTOMER_TYPE'))
             ->toArray();

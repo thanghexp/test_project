@@ -9,6 +9,9 @@ class Customer_contact extends Base_Model
     //
     public $primary_key = 'id';
     public $table = 'customer_contact';
+    public $fillable = [
+        'id',
+    ];
 
     /**
      * Function get list data of account

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckCustomerRequest;
 use App\Master_catalog;
+use Illuminate\Support\Facades\Response;
 use Validator;
 use Illuminate\Http\Request;
+use \App;
 
 class Customer_controller extends AppController
 {
@@ -28,7 +30,7 @@ class Customer_controller extends AppController
 
         $data['title'] = 'Customer - List';
         $data['customers'] = $res_customer['data']['items'];
-//        $data['pagination'] = $res_customer['data']['pagination'];
+
         $total = !empty($res_customer['data']['total']) ? (int) $res_customer['data']['total'] : null;
 
         $data['pagination'] = [
@@ -38,9 +40,6 @@ class Customer_controller extends AppController
             'prev_page' =>  $page != 1 ? '?page=' . ($page - 1) : null,
             'next_page' =>   $page != ($total % $params['limit']) ? '?page=' . ($page + 1) : null,
         ];
-
-
-//        dd($data);
 
         // Load view
         return view('customer.index', $data);
@@ -78,7 +77,7 @@ class Customer_controller extends AppController
             $data['edit_data'] = TRUE;
         }
 
-        /** @var $res_customer_contact*/
+        /** @var $res_customer_contact */
         $res_customer_contacts = $customer_contact->get_list_data()->getData(TRUE);
         $res_accounts = $account->get_list_data()->getData(TRUE);
 
@@ -111,8 +110,38 @@ class Customer_controller extends AppController
      * Create new location 
      *  
      */
-    public function create_location($id = null)
+    public function create_location(Request $request, $id = null)
     {
+        if($request->method() == 'POST') {
+            // Get data post
+            $params = $request->all();
+
+            $customer_location_model = new App\Customer_location();
+
+            // Call Model Customer location to create new
+            $customer_location_model->create_customer_location(!empty($params) ? $params : []);
+
+            return redirect('customer/detail/' . $params['customer_id']);
+        }
+
+        // Load model
+        $master_catalog_model = new Master_catalog();
+        $customer_contact_model = new App\Customer_contact();
+
+        /** @var Object $res_master_catalog Get list data master catalog */
+        $res_master_catalog = $master_catalog_model->get_value_master_catalog([
+            'type' => env('CATALOG_CUSTOMER_STATUS')
+        ])
+        ->getData(TRUE);
+
+        /** @var Object $res_customer_contact Get list data customer contact */
+        $res_customer_contact = $customer_contact_model->get_list_data()->getData(TRUE);
+
+        // Get dropdown for customer contact main_charge and extra data
+        $data['customer_contacts'] = !empty($res_customer_contact) ? $res_customer_contact['data'] : [];
+        $data['location_status'] = !empty($res_master_catalog) ? $res_master_catalog['data'] : [];
+        $data['customer_id'] = $id;
+
         $data['title'] = 'Create location' . env('APP_NAME');
         return view('customer.create_location', $data);
     }
@@ -166,11 +195,11 @@ class Customer_controller extends AppController
         ])->getData(TRUE);
 
         $data['edit_data'] = TRUE;
-        $data['customer_status'] = $customer_status['data'];
-        $data['customer_types'] = $customer_type['data'];
-        $data['customer_bill_types'] = $bill_types['data'];
-        $data['customer_contacts'] = $res_customer_contacts['data'];
-        $data['accounts'] = $res_accounts['data'];
+        $data['customer_status'] = !empty($customer_status['data']) ? $customer_status['data'] : [];
+        $data['customer_types'] = !empty($customer_type['data']) ? $customer_type['data'] : [];
+        $data['customer_bill_types'] = !empty($bill_types['data']) ? $bill_types['data'] : [];
+        $data['customer_contacts'] = !empty($res_customer_contacts['data']) ? $res_customer_contacts['data'] : [];
+        $data['accounts'] = !empty($res_accounts['data']) ? $res_accounts['data'] : [];
 
         $data['page_title'] = 'Register customer';
         $data['title'] = 'Register - Customer';
@@ -190,10 +219,15 @@ class Customer_controller extends AppController
     {
         // Load model
         $customer = new \App\Customer;
+        $customer_location_model = new \App\Customer_location();
+        $customer_contact_model = new \App\Customer_contact();
 
         /** @var object $res_customer Get info detail of customer */
         $res_customer = $customer->get_detail(['id' => (int) $id])
             ->getData(TRUE);
+
+        $data['customer_locations'] = $customer_location_model->get_list();
+        $data['customer_contacts'] = $customer_contact_model->get_list();
 
         $data['title'] = 'Customer - detail | ' . env('APP_NAME');
         $data['data_customer'] = !empty($res_customer['data']) ? $res_customer['data'] : NULL;

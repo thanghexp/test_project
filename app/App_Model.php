@@ -130,12 +130,16 @@ class App_Model extends Model
      */
     public function save_data($data, $option = [])
     {
+		if(empty($data)) return;
+
+		$data['created_by'] = '';
+		$data['updated_by'] = '';
+
 		if(!is_array($data)) {
 			return FALSE;
 		}
 
 		$target = $this;
-
 		// Update data
 		if(isset($option['where']) && is_array($option['where'])) {
 			foreach($option['where'] AS $field => $value) {
@@ -145,10 +149,11 @@ class App_Model extends Model
 		}
 		// Insert data
 		else {
-			if($option['type'] == TRUE) {
+			if(isset($option['type']) && $option['type'] == TRUE) {
 				return $this->saveMany($data);
 			} else {
-				$res = $this->save($data);
+				$data['created_by'] = 'admin:1';
+				$res = $this->create($data);
 				return $res->id;
 			}
 		}

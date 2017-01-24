@@ -16,12 +16,22 @@ Route::get('/', function () {
 });
 
 /** Route CUSTOMER*/
-Route::get('customer', 'Customer_controller@index');
-Route::get('customer/create', 'Customer_controller@create');
-Route::get('customer/{id}/edit/', 'Customer_controller@create');
-Route::post('customer/store', 'Customer_controller@store')->middleware('validator:App\Customer');
-Route::get('customer/detail/{id}', 'Customer_controller@detail');
-Route::get('customer/{id}/create_location', 'Customer_controller@create_location');
+Route::group(['prefix' => 'customer'], function () {
+    // Controllers Within The "App\Http\Controllers\Admin" Namespace
+    Route::get('', 'Customer_controller@index');
+    Route::get('create', 'Customer_controller@create');
+    Route::get('{id}/edit/', 'Customer_controller@create');
+    Route::post('store', 'Customer_controller@store')->middleware('validator:App\Customer');
+    Route::get('detail/{id}', 'Customer_controller@detail');
+
+    // Action handle Customer location
+    Route::get('{id}/create_location', 'Customer_controller@create_location');
+    Route::post('save_location', 'Customer_controller@create_location')->middleware('validator:App\Customer_location');
+
+    // Action handle Customer contact
+    Route::get('{id}/create_contact', 'Customer_controller@create_contact');
+    Route::post('{id}/create_contact', 'Customer_controller@create_contact');
+});
 
 $router->get('create', [
     'uses' => 'Customer_controller@create',

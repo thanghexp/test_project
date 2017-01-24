@@ -10,6 +10,13 @@ class Master_catalog extends Base_Model
     public $primary_key = 'id';
     public $table = 'master_catalog';
 
+    /**
+     * Get value master catalog with param
+     *
+     * @param array $params
+     *
+     * @return array
+     */
     public function get_value_master_catalog($params = [])
     {
         // Load model

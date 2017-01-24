@@ -90,7 +90,7 @@ class Customer extends Base_Model
         // Attach customer to get main charge name
         $this->_attach_detail_customer($res_customer);
 
-        return $this->true_json( $this->build_response($res_customer[$params['id']]) );
+        return $this->true_json( $this->build_response($res_customer[$params['id']], ['detail' => TRUE] ));
     }
 
     /**
@@ -225,7 +225,7 @@ class Customer extends Base_Model
                     $res_customer_type = !empty($res_customer_type) ? $res_customer_type : [];
 
                     // Check $res_customer_type have not exist in  $params
-                    $data_customer_type;
+                    $data_customer_type = [];
                     foreach ($res_customer_type AS $value) {
                         if (!in_array($value->type, $params['type'])) {
                             $customer_type_model->where([
@@ -283,7 +283,7 @@ class Customer extends Base_Model
 //            return [];
 //        }
 
-        return $this->build_response_customer($data);
+        return $this->build_response_customer($data, $option);
     }
 
 

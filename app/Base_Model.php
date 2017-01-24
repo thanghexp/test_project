@@ -19,7 +19,6 @@ class Base_Model extends App_Model
      */
     public function _attach_customer_main_charge_name(& $customers)
     {
-
         $id_customer = [];
         $data_customers = [];
         foreach($customers AS $key => $customer) {
@@ -65,11 +64,13 @@ class Base_Model extends App_Model
             $data_customers[$customer->id]->main_charge_contact = NULL;
             $data_customers[$customer->id]->extra_charge_name = NULL;
             $data_customers[$customer->id]->account_name = NULL;
+            $data_customers[$customer->id]->customer_contact = [];
+            $data_customers[$customer->id]->customer_location = [];
         }
 
         // Load model
         $customer_contact = new \App\Customer_contact();
-//        $customer_locations = new \App\Customer_location();
+        $customer_locations = new \App\Customer_location();
 
         /** @var object $res_customer_contacts Get list customer contact */
         $res_customer_contacts = $customer_contact->get()->all();
@@ -94,12 +95,33 @@ class Base_Model extends App_Model
         unset($res_customer_contacts);
 
         /** @var object $res_customer_locations Get list customer location */
-//        $res_customer_locations = $customer_locations->get()->all();
+        $res_customer_locations = $customer_locations->get_list();
 
         // Mapping to customer_locations
-//        array_map(function($v) use(&$data_customers) {
-//            foreach($data_customers)
-//        }, $res_customer_locations);
+        $data_locations = [];
+        array_map(function($v) use(&$data_customers) {
+            foreach($data_customers AS $customer) {
+                if($v->customer_id == $customer->id) {
+                    $data_customers[$customer->id]->customer_location = $v;
+                }
+            }
+        }, $res_customer_locations);
+        unset($res_customer_locations);
+
+        dd($data_customers);
+
+        /** @var object $res_customer_locations Get list customer location */
+        $res_customer_contacts = $customer_contact->get_list();
+
+        // Mapping to customer_locations
+        array_map(function($v) use(&$data_customers) {
+            foreach($data_customers AS &$customer) {
+                if($v->customer_id == $customer->id) {
+                    $data_customers[$customer->id]->customer_contact = $v;
+                }
+            }
+        }, $res_customer_contacts);
+        unset($res_customer_contacts);
 
         $customers = $data_customers;
 
@@ -143,7 +165,6 @@ class Base_Model extends App_Model
      */
     public function build_response_customer($data, $option = [])
     {
-
         $data_customer = [
             'id' => $data->id,
             'name' => !empty($data->name) ? $data->name : NULL,
@@ -159,16 +180,16 @@ class Base_Model extends App_Model
             'main_charge_extra' => !empty($data->main_charge_extra) ? $data->main_charge_extra : NULL,
         ];
 
-//        if($option['detail']) {
-//            $data_detail = [
-//
-//
-//            ];
-//
-//        }
+        if(isset($option['detail'])) {
+            $data_detail = [
+                'customer_contacts' => !empty($data->customer_contact) ? $data->customer_contact : [],
+                'customer_locations' => !empty($data->customer_location) ? $data->customer_location : []
+            ];
+
+        }
 
         // Return
-        return $data_customer;
+        return array_merge($data_customer, !empty($data_detail) ? $data_detail : []);
     }
 
     /**
