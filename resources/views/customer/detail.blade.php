@@ -77,7 +77,6 @@
             </div>
             <div class="box-body">
                 @include('customer/partial/list_contact', ['contacts' => $data_customer['customer_contacts']] )
-                <!--{include file='customer/partial/list_contact.html' contacts=$data_customer.contacts}-->
             </div>
         </div>
     </div>
@@ -112,6 +111,9 @@
         </div>
     </div>
 </div>
+    {{ smarty_demo(['demo' => 'abc']) }}
+     <!--{function name="demo_smarty" param="abc"}-->
+    <!--{/function}-->
 @endsection
 
 @section('javascript')

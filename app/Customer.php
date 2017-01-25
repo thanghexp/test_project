@@ -228,7 +228,7 @@ class Customer extends Base_Model
                         'extra_charge' => !empty($params['extra_charge']) ? $params['extra_charge'] : null,
                         'created_by' => !empty($params['created_by']) ? $params['created_by'] : null,
                         'updated_by' => !empty($params['updated_by']) ? $params['updated_by'] : null,
-//                        'bill_type' => !empty($params['bill_type']) ? $params['bill_type'] : null
+                        'bill_type' => !empty($params['bill_type']) ? $params['bill_type'] : null
                     ]);
 
                 if(!empty($params['type'])) {

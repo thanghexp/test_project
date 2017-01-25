@@ -11,6 +11,7 @@
  */
 function smarty_function_common_time($params, &$smarty)
 {
+
 	$datetime = isset($params['datetime']) ? $params['datetime'] : null;
 
 	if (!$datetime) {

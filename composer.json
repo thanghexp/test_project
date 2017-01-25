@@ -18,6 +18,9 @@
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*"
     },
+    "files": [
+        "app/Http/helpers.php"
+    ],
     "autoload": {
         "classmap": [
             "database"

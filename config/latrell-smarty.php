@@ -1,7 +1,7 @@
 <?php
 return [
 	// Smarty模板文件拓展名。
-	'extension' => 'html',
+	'extension' => '',
 
 	'debugging' => false,
 	'caching' => true,
