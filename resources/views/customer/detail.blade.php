@@ -17,7 +17,6 @@
                     </li>
                     <li class="list-group-item">
                         <i class="fa fa-cogs margin-r-5 text-primary"></i>取引先種別
-                        <!--{assign var=type value=$data_customer.data_types|array_column:type_name}-->
                         <span class="pull-right">{{ !empty($data_customer['type']) ? implode(',', $data_types) : '' }}</span>
                     </li>
                     <li class="list-group-item">
@@ -115,7 +114,6 @@
 </div>
 @endsection
 
-<!--{content_for name='headjs'}-->
 @section('javascript')
 <script type="text/javascript" src="/js/TEXIS.CustomerDetail.js"></script>
 <script type="text/javascript" src="/js/TEXIS.History.js"></script>

@@ -94,34 +94,7 @@ class Base_Model extends App_Model
         }, $res_customer_contacts);
         unset($res_customer_contacts);
 
-        /** @var object $res_customer_locations Get list customer location */
-        $res_customer_locations = $customer_locations->get_list();
-
-        // Mapping to customer_locations
-        $data_locations = [];
-        array_map(function($v) use(&$data_customers) {
-            foreach($data_customers AS $customer) {
-                if($v->customer_id == $customer->id) {
-                    $data_customers[$customer->id]->customer_location = $v;
-                }
-            }
-        }, $res_customer_locations);
-        unset($res_customer_locations);
-
-        dd($data_customers);
-
-        /** @var object $res_customer_locations Get list customer location */
-        $res_customer_contacts = $customer_contact->get_list();
-
-        // Mapping to customer_locations
-        array_map(function($v) use(&$data_customers) {
-            foreach($data_customers AS &$customer) {
-                if($v->customer_id == $customer->id) {
-                    $data_customers[$customer->id]->customer_contact = $v;
-                }
-            }
-        }, $res_customer_contacts);
-        unset($res_customer_contacts);
+      
 
         $customers = $data_customers;
 
@@ -182,8 +155,8 @@ class Base_Model extends App_Model
 
         if(isset($option['detail'])) {
             $data_detail = [
-                'customer_contacts' => !empty($data->customer_contact) ? $data->customer_contact : [],
-                'customer_locations' => !empty($data->customer_location) ? $data->customer_location : []
+                'customer_contacts' => !empty($data->contacts) ? $data->contacts : [],
+                'customer_locations' => !empty($data->locations) ? $data->locations : []
             ];
 
         }

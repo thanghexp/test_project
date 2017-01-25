@@ -1,9 +1,10 @@
 <div class="panel-group" id="customerLocation" role="tablist" aria-multiselectable="true">
+
    @foreach($locations as $key => $location )
         <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="heading<!--{$key}-->">
+            <div class="panel-heading" role="tab" id="heading{{$key}}">
                 <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#customerLocation" href="#location<!--{$key}-->" aria-expanded="true" aria-controls="location<!--{$key}-->">
+                    <a role="button" data-toggle="collapse" data-parent="#customerLocation" href="#location{{$key}}" ar{a-expanded="true" aria-controls="location{{$key}}">
                         <ul class="list-inline list-customer m-b-0">
                             @if(!empty($location['status']) )
                                 <li><i class="fa fa-info-circle margin-r-5"></i>{{ $location['status'] }}</li>

@@ -14,9 +14,9 @@
                             <div class="form-group">
                                 <label>ステータス<span class="text-danger">※</span></label>
                                 <select class="form-control select2" id="status" name="status">
-                                    <!--{foreach from=$contact_status item=status}-->
-                                    <option value="<!--{$status.code|escape}-->" <!--{if isset($data_contact.status) && $data_contact.status==$status.code}-->selected<!--{/if}-->><!--{$status.value|escape|default:''}--></option>
-                                    <!--{/foreach}-->
+                                    @foreach($contact_status AS $status )
+                                    <option value="{{$status['code']}}" @if isset($data_contact['status']) && $data_contact['status'] ==$status['code']) selected @endif>{{ $status['value'] }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

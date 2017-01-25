@@ -226,6 +226,8 @@ class Customer_controller extends AppController
         $res_customer = $customer->get_detail(['id' => (int) $id])
             ->getData(TRUE);
 
+        // dd($res_customer);
+
         $data['customer_locations'] = $customer_location_model->get_list();
         $data['customer_contacts'] = $customer_contact_model->get_list();
 

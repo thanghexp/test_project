@@ -85,12 +85,29 @@ class Customer extends Base_Model
         /** @var object $res_customer Get list all */
         $res_customer = $this->find($params['id']);
 
-        $res_customer = [$res_customer];
+        // Load model 
+        $customer_location_model = new \App\Customer_location();
+        $customer_contact_model = new \App\Customer_contact();
 
-        // Attach customer to get main charge name
-        $this->_attach_detail_customer($res_customer);
+        /** @var object $res_customer_locations Get list customer location */
+        $res_customer_locations = $customer_location_model->get_list([
+            'where' => [
+                'customer_id' => $params['id']
+            ]
+        ]);
 
-        return $this->true_json( $this->build_response($res_customer[$params['id']], ['detail' => TRUE] ));
+        $res_customer->locations = $res_customer_locations;
+
+        // Get array customer location with $params['id']
+        $res_customer_contacts = $customer_contact_model->get_list([
+            'where' => [
+                'customer_id' => $params['id']
+            ]
+        ]);
+
+        $res_customer->contacts = $res_customer_contacts;
+
+        return $this->true_json( $this->build_response($res_customer, ['detail' => TRUE] ));
     }
 
     /**
