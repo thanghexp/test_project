@@ -33,6 +33,14 @@ Route::group(['prefix' => 'customer'], function () {
     Route::post('{id}/create_contact', 'Customer_controller@create_contact');
 });
 
+/** Route INDUSTRIAL_WASTE */
+Route::group(['prefix' => 'industrial_waste'], function() {
+
+    Route::get('', 'Industrial_waste_controller@index');
+    Route::get('create', 'Industrial_waste_controller@create');
+    Route::get('update', 'Industrial_waste_controller@update');
+});
+
 $router->get('create', [
     'uses' => 'Customer_controller@create',
      // Pass the model name (including namespace)

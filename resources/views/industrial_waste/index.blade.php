@@ -1,3 +1,6 @@
+@extends('layouts.base')
+
+@section('content')
 <div class="row" id="x-list-industrial-waste">
     <div class="col-md-12">
         <div class="box box-primary">
@@ -9,7 +12,7 @@
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-flat dropdown-toggle btn-mobile" data-toggle="dropdown" aria-expanded="false"><b><!--{if !$list_detail_page }--> ステータス <!--{else}--> 詳細 <!--{/if}--></b>
+                        <button type="button" class="btn btn-primary btn-flat dropdown-toggle btn-mobile" data-toggle="dropdown" aria-expanded="false"><b>@if( !$list_detail_page ) ステータス @else 詳細 @endif</b>
                             <span class="fa fa-caret-down m-l-5"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -32,7 +35,7 @@
 
                     <!--{*include file='partial/search.html' config=$pagination*}-->
 
-                    <!--{if empty($list_detail_page)}-->
+                    @if( empty($list_detail_page) )
                        <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -74,7 +77,7 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                            <!--{foreach from=$industrial_wastes item=industrial_waste}-->
+                            @forelse( $industrial_wastes AS $industrial_waste )
                             <tr>
                             <tr>
                                 <td class="check"><input type="checkbox" name="industrial_waste_id" value="<!--{$industrial_waste.id}-->" class="minimal check"></td>
@@ -104,9 +107,9 @@
                                 </td>
                             </tr>
                             </tr>
-                            <!--{foreachelse}-->
+                            @empty
                                 <!--{include file='partial/list_empty.html' total_column=13}-->
-                            <!--{/foreach}-->
+                            @endforelse
                             </tbody>
                             <div class="x-table-overlay">
                                 <div class="overlay">
@@ -115,13 +118,13 @@
                             </div>
                         </table>
                     </div>
-                    <!--{else}-->
+                    @else
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th class="text-center"><input type="checkbox" class="minimal checkAll" name="industrial_waste_id" value=""></th>
-                                    <th class="text-center" style="min-width:120px">引取日
+                                    <th class="text-center" style="min-width:120px">Ticket name
                                         <div class="">
                                             <a class="sort
                                              <!--{if $order == 'take_off_at' && $sort == 'ASC'}-->sorting_asc
@@ -182,7 +185,7 @@
                                 </thead>
                                 <tbody class="text-center">
 
-                                <!--{foreach from=$industrial_wastes item=industrial_waste}-->
+                                @forelse($industrial_wastes AS $industrial_waste)
                                 <tr>
                                     <td class="check"><input type="checkbox" name="industrial_waste_id" value="<!--{$industrial_waste.id}-->" class="minimal check"></td>
                                     <td><!--{$industrial_waste.take_off_at|escape|default:''}--></td>
@@ -197,9 +200,9 @@
                                         <a href="/industrial_waste/detail/<!--{$industrial_waste.id}-->" class="btn btn-info btn-flat btn-xs"><b><i class="fa fa-file-text margin-r-5"></i>詳細</b></a>
                                     </td>
                                 </tr>
-                                <!--{foreachelse}-->
-                                <!--{include file='partial/list_empty.html' total_column=9}-->
-                                <!--{/foreach}-->
+                                @empty
+                                    @include('partial/list_empty', ['total_column' => 9] )
+                                @endforelse
                                 </tbody>
                                 <div class="x-table-overlay">
                                     <div class="overlay">
@@ -208,7 +211,7 @@
                                 </div>
                             </table>
                     </div>
-                    <!--{/if}-->
+                    @endif
 
                     <!--{include file='partial/pagination.blade.php' config=$pagination}-->
                 </div>
@@ -226,8 +229,9 @@
             sort=$sort
         }-->
 </div>
+@endsection
 
-<!--{content_for name="headjs"}-->
+@section('javascript')
 <script>
     $(function () {
         //Flat red color scheme for iCheck
@@ -246,4 +250,4 @@
         });
     });
 </script>
-<!--{/content_for}-->
+@endsection

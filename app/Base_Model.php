@@ -102,6 +102,45 @@ class Base_Model extends App_Model
     }
 
     /**
+     * Function Attach iw get info detail
+     *
+     */
+    public function _attach_iw_detail($industrial_wastes) 
+    {
+      $data_industrial_wastes = [];
+      foreach($industrial_wastes AS $industrial_waste) {
+
+        $data_industrial_wastes[$industrial_waste->id] = $industrial_waste;
+        $data_industrial_wastes[$industrial_waste->id]->client_customer_name = null;
+        $data_industrial_wastes[$industrial_waste->id]->logistic_customer_name = null;
+      }
+
+      // Load model 
+      $customer_model = new \App\Customer;
+
+      /** @var object $res_customer Get list customer from model */
+      $res_customer = $customer_model->get_list();
+
+      // Attach customer name
+      array_map(function($v) use(& $data_industrial_wastes) {
+        foreach($data_industrial_wastes as $industrial_waste ) {
+          
+          if($industrial_waste->logistic_customer_id == $v->id) {
+            $data_industrial_wastes[$industrial_waste->id]->client_customer_name = !empty($v->name) ? $v->name : null;
+          }
+
+          if($industrial_waste->supplier_customer_id == $v->id) {
+            $data_industrial_wastes[$industrial_waste->id]->logistic_customer_name = !empty($v->name) ? $v->name : null; 
+          }
+
+        }
+      }, $res_customer);
+
+      
+
+    }
+
+    /**
      * Function attach info account
      */
     public function _attach_detail_account(& $res_account)
