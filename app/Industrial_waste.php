@@ -14,7 +14,7 @@ class Industrial_waste extends Base_Model
     	'ticket_name'
     ];
 
-        /**
+    /**
      * Function get list data of customer
      *
      * @param array $params
@@ -23,18 +23,35 @@ class Industrial_waste extends Base_Model
      *
      * @return json
      */
-    public function get_data($params = [])
+    public function get_list_data($params = [])
     {
         /** @var Object $res_customer Get list customer  */
-        $res_iw = $this->get_list($params);
+        $res_industrial_waste = $this->get_list($params);
 
         // Attach detail industrial waste
-        $this->_attach_iw_detail($res_iw);
+        $this->_attach_detail_industrial_waste($res_industrial_waste);
+
+        foreach($res_industrial_waste as $iw) {
+            $res_industrial_waste[$iw->id]->definition_data = $this->_attach_status_definition($iw->status_bitmask, [
+                'type' => config('config.INDUSTRIAL_WASTE_TYPE')
+            ]);
+        }
 
         // Return
         return $this->true_json([
-            'items' => $res_iw,
+            'items' => $this->build_responses($res_industrial_waste),
             'total' => $this->count()
         ]);
+    }
+
+    /**
+     * Function build response
+     */
+    public function build_response($industrial_waste) {
+        if(empty($industrial_waste)) {
+            return;
+        }
+
+        return $this->build_response_industrial_waste($industrial_waste);
     }
 }

@@ -9,8 +9,34 @@ class Base_Model extends App_Model
     protected $primaryKey = '';
     protected $table = '';
     protected $fillable = [];
+    public $constants = [];
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->constants = $this->default_constant;
+    }
 
+    /**
+     * Function get list value type of catalog
+     *
+     * @param string $param
+     *
+     * @return Object
+     */
+    public function _get_value_master_catalog($param = [])
+    {
+        if(empty($param['type'])) return null;
+
+        // Load model
+        $master_catalog = new \App\Master_catalog();
+
+        // Return Object filter follow type
+        return $master_catalog
+            ->get()
+            ->where('type', $param['type'])
+            ->all();
+    }
 
     /**
      * Function attach info of customer contact into customer
@@ -22,16 +48,19 @@ class Base_Model extends App_Model
         $id_customer = [];
         $data_customers = [];
         foreach($customers AS $key => $customer) {
+
             // Get id customer
             $id_customer[] = $customer->id;
 
+            // init customer main charge name and main charge contact
             $data_customers[$customer->id] = $customer;
             $data_customers[$customer->id]->main_charge_name = '';
             $data_customers[$customer->id]->main_charge_contact = '';
         }
 
         /** @var object $res_customer_contacts Get list customer contact */
-        $res_customer_contacts = \App\Customer_contact::get()->all();
+        $res_customer_contacts = \App\Customer_contact::get()
+            ->all();
 
         // Mapping to customer_contact
         array_map(function($v) use(&$data_customers) {
@@ -45,11 +74,11 @@ class Base_Model extends App_Model
         }, $res_customer_contacts);
         unset($res_customer_contacts);
 
+        // Assign data for cursor
         $customers = $data_customers;
 
         unset($data_customers);
     }
-
 
     /**
      * Function Attach customer get info detail
@@ -59,6 +88,8 @@ class Base_Model extends App_Model
     {
         $data_customers = [];
         foreach($customers as $customer) {
+
+            // Get info contact
             $data_customers[$customer->id] = $customer;
             $data_customers[$customer->id]->main_charge_name = NULL;
             $data_customers[$customer->id]->main_charge_contact = NULL;
@@ -70,10 +101,14 @@ class Base_Model extends App_Model
 
         // Load model
         $customer_contact = new \App\Customer_contact();
+
+        /** Todo: Get info location of customer  */
         $customer_locations = new \App\Customer_location();
 
         /** @var object $res_customer_contacts Get list customer contact */
-        $res_customer_contacts = $customer_contact->get()->all();
+        $res_customer_contacts = $customer_contact
+            ->get()
+            ->all();
 
         // Mapping to customer_contact
         array_map(function($v) use(&$data_customers) {
@@ -94,8 +129,6 @@ class Base_Model extends App_Model
         }, $res_customer_contacts);
         unset($res_customer_contacts);
 
-      
-
         $customers = $data_customers;
 
         unset($data_customers);
@@ -105,39 +138,99 @@ class Base_Model extends App_Model
      * Function Attach iw get info detail
      *
      */
-    public function _attach_iw_detail($industrial_wastes) 
+    public function _attach_detail_industrial_waste(& $industrial_wastes)
     {
-      $data_industrial_wastes = [];
-      foreach($industrial_wastes AS $industrial_waste) {
+          $data_industrial_wastes = [];
+          foreach($industrial_wastes AS $industrial_waste) {
 
-        $data_industrial_wastes[$industrial_waste->id] = $industrial_waste;
-        $data_industrial_wastes[$industrial_waste->id]->client_customer_name = null;
-        $data_industrial_wastes[$industrial_waste->id]->logistic_customer_name = null;
-      }
-
-      // Load model 
-      $customer_model = new \App\Customer;
-
-      /** @var object $res_customer Get list customer from model */
-      $res_customer = $customer_model->get_list();
-
-      // Attach customer name
-      array_map(function($v) use(& $data_industrial_wastes) {
-        foreach($data_industrial_wastes as $industrial_waste ) {
-          
-          if($industrial_waste->logistic_customer_id == $v->id) {
-            $data_industrial_wastes[$industrial_waste->id]->client_customer_name = !empty($v->name) ? $v->name : null;
+               // Get info necessary of industrial waste
+                $data_industrial_wastes[$industrial_waste->id] = $industrial_waste;
+                $data_industrial_wastes[$industrial_waste->id]->client_customer_name = null;
+                $data_industrial_wastes[$industrial_waste->id]->logistic_customer_name = null;
+                $data_industrial_wastes[$industrial_waste->id]->type_name = null;
           }
 
-          if($industrial_waste->supplier_customer_id == $v->id) {
-            $data_industrial_wastes[$industrial_waste->id]->logistic_customer_name = !empty($v->name) ? $v->name : null; 
-          }
+          // Load model
+          $customer_model = new \App\Customer();
+          $master_catalog_model = new \App\Master_catalog();
 
-        }
-      }, $res_customer);
+          /** @var object $res_customer Get list customer from model */
+          $res_customer = $customer_model->get_list();
 
-      
+          // Attach customer name
+          array_map(function($v) use(& $data_industrial_wastes) {
+            foreach($data_industrial_wastes as $industrial_waste ) {
 
+              if($industrial_waste->client_customer_id == $v->id) {
+                $data_industrial_wastes[$industrial_waste->id]->client_customer_name = !empty($v->name) ? $v->name : null;
+              }
+
+              if($industrial_waste->logistic_customer_id == $v->id) {
+                $data_industrial_wastes[$industrial_waste->id]->logistic_customer_name = !empty($v->name) ? $v->name : null;
+              }
+
+            }
+          }, $res_customer);
+        unset($res_customer);
+
+        /** @var object $res_master_catalog Get list master catalog from model */
+        $res_iw_type = $master_catalog_model->_get_value_master_catalog([
+            'type' => config('config.INDUSTRIAL_WASTE_TYPE')
+        ]);
+
+        // Attach type name
+        array_map(function($v) use(& $data_industrial_wastes) {
+            foreach($data_industrial_wastes as $industrial_waste ) {
+                if($industrial_waste->type == $v->code) {
+                    $data_industrial_wastes[$industrial_waste->id]->type_name = !empty($v->value) ? $v->value : null;
+                }
+            }
+        }, $res_iw_type);
+        unset($res_iw_type);
+
+        $industrial_wastes = $data_industrial_wastes;
+
+        unset($data_industrial_wastes);
+
+    }
+
+    /**
+     * Function definition
+     *
+     * @param string $status_bitmask
+     * @param array $option
+     *
+     * @return Array
+     */
+    public function _attach_status_definition($status_bitmask, $option = [])
+    {
+        // Load model
+        $master_catalog_model = new \App\Master_catalog();
+
+        // Check empty when type
+        if(empty($option['type'])) return [];
+
+        /** @var object $res_master_catalog Get list master catalog from model */
+        $res_status_definition = $master_catalog_model->_get_value_master_catalog([
+            'type' => $option['type']
+        ]);
+
+        // Check condition result status definition is empty
+        if(empty($res_status_definition)) return [];
+
+        // Handle definition status
+        $data_definition = [];
+        array_map(function($v) use( $status_bitmask, & $data_definition ) {
+            for($i = 0; $i < strlen($status_bitmask); $i++) {
+                if($i + 1 == $v->ordering ) {
+                    $data_definition[$v->code] = $v;
+                    $data_definition[$v->code]->status = (int) $status_bitmask[$i];
+                    break;
+                }
+            }
+        }, $res_status_definition);
+
+        return $data_definition;
     }
 
     /**
@@ -251,6 +344,37 @@ class Base_Model extends App_Model
         // Return
         return !empty($data_account) ? $data_account : [];
     }
+
+    /**
+     * Function build response account
+     *
+     * @param array $data
+     * @param mixed $option
+     *
+     * @return array
+     */
+    public function build_response_industrial_waste($data, $option = [])
+    {
+        $data_industrial_waste = [
+            'id' => (int) $data->id,
+            'ticket_name' => !empty($data->ticket_name) ? $data->ticket_name : null,
+            'take_off_at' => !empty($data->take_off_at) ? $data->take_off_at : null,
+            'client_customer_id' => !empty($data->client_customer_id) ? $data->client_customer_id : null,
+            'client_customer_name' => !empty($data->client_customer_name) ? $data->client_customer_name : null,
+            'manifest_no' => !empty($data->manifest_no) ? $data->manifest_no : null,
+            'type' => !empty($data->type) ? $data->type : null,
+            'type_name' => !empty($data->type_name) ? $data->type_name : null,
+            'logistic_customer_id' => !empty($data->logistic_customer_id) ? $data->logistic_customer_id : null,
+            'logistic_customer_name' => !empty($data->logistic_customer_name) ? $data->logistic_customer_name : null,
+            'quantity' => !empty($data->quantity) ? $data->quantity : null,
+            'unit' => !empty($data->unit) ? $data->unit : null,
+            'definition_data' => !empty($data->definition_data) ? $data->definition_data : null
+        ];
+
+        // Return
+        return !empty($data_industrial_waste) ? $data_industrial_waste : [];
+    }
+
 
     /**
      * Function build response master catalog

@@ -165,6 +165,7 @@ return [
 
         'Latrell\Smarty\SmartyServiceProvider',
 
+
         /*
          * Package Service Providers...
          */

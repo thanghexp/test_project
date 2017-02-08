@@ -19,7 +19,8 @@
         "symfony/dom-crawler": "3.1.*"
     },
     "files": [
-        "app/Http/helpers.php"
+        "app/Http/helpers.php",
+        "config/config.php"
     ],
     "autoload": {
         "classmap": [

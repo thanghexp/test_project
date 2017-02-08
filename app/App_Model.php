@@ -11,6 +11,33 @@ class App_Model extends Model
 	protected $table = '';
 	protected $fillable = [];
 
+	// SET DEFAULT FOR CONSTANT
+	public $default_constant = [
+
+		// SETTING MASTER CATALOG
+		'CATALOG_CUSTOMER_STATUS' => 'customer_status',
+		'CATALOG_CUSTOMER_TYPE' => 'customer_type',
+		'CATALOG_CUSTOMER_BILL_TYPE' => 'customer_bill_type',
+
+		// BUILD OBJECT
+		'OBJECT_CUSTOMER' => 'customer',
+		'OBJECT_IW' => 'industrial_waste',
+		'OBJECT_PU' => 'purchase',
+		'OBJECT_SA' => 'sale',
+
+		// BUILD ACTION
+		'ACTION_CREATE' => 'create',
+		'ACTION_UPDATE' => 'update',
+
+		// BUILD TYPE
+		'INDUSTRIAL_WASTE_TYPE' => 'industrial_waste_type',
+
+		// BUILD DEFINITION
+		'INDUSTRIAL_WASTE_DEFINITION' => 'industrial_waste_definition',
+		'PURCHASE_DEFINITION' => 'purchase_definition',
+		'SALE_DEFINITION' => 'sale_definition'
+	];
+
     /**
 	 * Function common
 	 *

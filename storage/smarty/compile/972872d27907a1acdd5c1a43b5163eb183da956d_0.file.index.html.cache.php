@@ -19,7 +19,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'includes' => 
   array (
     'file:partial/searchbox.html' => 1,
-    'file:industrial_waste/partial/item_definition.html' => 8,
+    'file:industrial_waste/partial/item_definition.blade.php' => 8,
     'file:partial/list_empty.html' => 2,
     'file:partial/pagination.blade.php' => 1,
     'file:partial/modal/industrial_waste/change_status.html' => 1,
@@ -120,35 +120,35 @@ foreach ($_from as $_smarty_tpl->tpl_vars['industrial_waste']->value) {
                                 <td class="text-left"><?php echo (($tmp = @htmlspecialchars($_smarty_tpl->tpl_vars['industrial_waste']->value['ticket_name'], ENT_QUOTES, 'UTF-8', true))===null||$tmp==='' ? '' : $tmp);?>
 </td>
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['confirm_taking_over'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['confirm_taking_over'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['requested_to_deliver'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['requested_to_deliver'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['contact_taking_over_date'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['contact_taking_over_date'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['contact_taking_over_detail'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['contact_taking_over_detail'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['carrying_in_completion'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['carrying_in_completion'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['confirm_quantity'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['confirm_quantity'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['disposal_completed'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['disposal_completed'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
-                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['return_mf'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
+                                <?php $_smarty_tpl->_subTemplateRender('file:industrial_waste/partial/item_definition.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('definition_data'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['definition_data']['return_mf'],'data_id'=>$_smarty_tpl->tpl_vars['industrial_waste']->value['id']), 0, true);
 ?>
 
 
