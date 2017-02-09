@@ -45,3 +45,8 @@ $router->get('create', [
     'uses' => 'Customer_controller@create',
      // Pass the model name (including namespace)
 ]);
+
+Route::group(['prefix' => 'api'], function() {
+    Route::post('definition/change_status', 'api\Definition@change_status');
+});
+

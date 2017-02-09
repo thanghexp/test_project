@@ -259,6 +259,34 @@ class Base_Model extends App_Model
         $res_customer_contact = $data_account;
     }
 
+    /**
+     * Function build data of IW,SA,PU to type definition
+     *
+     * @param array $data_definition
+     * @param array $options
+     *
+     * @return array
+     */
+    public function build_definition_data($data_definition, $options = [])
+    {
+        // Check condition empty
+//        if(empty($data_definition)) return [];
+//
+//        $data = [];
+//        foreach($data_definition AS $value) {
+//            $data[$value->]
+//        }
+//
+//        $data_definition = [];
+//        foreach($data_definition AS $value) {
+//            $value
+//        }
+//
+//        echo '<pre>';
+//        print_r($data_definition); die;
+
+    }
+
 
 
     /**

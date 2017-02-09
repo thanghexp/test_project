@@ -28,9 +28,6 @@ class Industrial_waste_controller extends AppController
 
         $data['industrial_wastes'] = $res_iw['data']['items'];
 
-		foreach($data['industrial_wastes'] as $iw)
-		dd($iw['definition_data']);
-
 		$data['pagination'] = [
 			'total' => (int) $total,
 			'per_page' => ($total > $params) ? ($total % $params['limit'])  : 1,

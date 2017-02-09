@@ -6,9 +6,9 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <div class="pull-left">
-                    <a href="/industrial_waste/create" class="btn bg-olive btn-flat btn-mobile"><b><i class="fa fa-plus-circle margin-r-5"></i>新規作成</b></a>
+                    <a href="/industrial_waste/create" class="btn bg-olive btn-flat btn-mobile"><b><i class="fa fa-plus-circle margin-r-5"></i>REGISTER</b></a>
                     <a data-toggle="modal" data-target="#selectDateModal" class="btn btn-primary btn-flat btn-mobile"><b><i class="fa fa-file margin-r-5"></i>CSV</b></a>
-                    <a href="javascript:;" class="btn btn-danger btn-flat btn-mobile x-button-delete-industrial-waste"><b><i class="fa fa-trash margin-r-5"></i>削除</b></a>
+                    <a href="javascript:;" class="btn btn-danger btn-flat btn-mobile x-button-delete-industrial-waste"><b><i class="fa fa-trash margin-r-5"></i>DELETE</b></a>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
@@ -16,8 +16,8 @@
                             <span class="fa fa-caret-down m-l-5"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="@if(!$list_detail_page) active @endif"><a href="/industrial_waste @if(!empty($conditions_view)) ? $conditions_view @endif"><b>ステータス</b></a></li>
-                            <li  class="@if($list_detail_page) active @endif"><a href="/industrial_waste?view=list_detail @if( !empty($conditions_view) )& {{ $conditions_view }} @endif"><b>詳細</b></a></li>
+                            <li class="@if(!$list_detail_page) active @endif"><a href="/industrial_waste @if(!empty($conditions_view)) ? $conditions_view @endif"><b>Status</b></a></li>
+                            <li  class="@if($list_detail_page) active @endif"><a href="/industrial_waste?view=list_detail @if( !empty($conditions_view) )& {{ $conditions_view }} @endif"><b>Detail</b></a></li>
                         </ul>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                             <tr>
                             <tr>
                                 <td class="check"><input type="checkbox" name="industrial_waste_id" value="{{ $industrial_waste['id'] }}" class="minimal check"></td>
-                                <td>{{ $industrial_waste['id'] or '' }}</td>
+                                <td>{{ $industrial_waste['ticket_name'] or '' }}</td>
                                 <td class="text-left">{{ $industrial_waste['client_customer_name'] or '' }}</td>
                                 <td class="text-left">{{ $industrial_waste['ticket_name'] or '' }}</td>
 
@@ -90,19 +90,40 @@
                                     'data_id' => $industrial_waste['id']
                                 ])
 
-                                <!--{include file='industrial_waste/partial/item_definition.blade.php' definition_data=$industrial_waste.definition_data.requested_to_deliver data_id=$industrial_waste.id}-->
+                                @include('industrial_waste/partial/item_definition', [
+                                    'definition_data' => $industrial_waste['definition_data']['requested_to_deliver'],
+                                    'data_id' => $industrial_waste['id']
+                                ])
 
-                                <!--{include file='industrial_waste/partial/item_definition.blade.php' definition_data=$industrial_waste.definition_data.contact_taking_over_date data_id=$industrial_waste.id}-->
+                                @include('industrial_waste/partial/item_definition', [
+                                    'definition_data' => $industrial_waste['definition_data']['contact_taking_over_date'],
+                                    'data_id' => $industrial_waste['id']
+                                ])
 
-                                <!--{include file='industrial_waste/partial/item_definition.blade.php' definition_data=$industrial_waste.definition_data.contact_taking_over_detail data_id=$industrial_waste.id}-->
+                                @include('industrial_waste/partial/item_definition', [
+                                    'definition_data' => $industrial_waste['definition_data']['contact_taking_over_detail'],
+                                    'data_id' => $industrial_waste['id']
+                                ])
 
-                                <!--{include file='industrial_waste/partial/item_definition.blade.php' definition_data=$industrial_waste.definition_data.carrying_in_completion data_id=$industrial_waste.id}-->
+                                @include('industrial_waste/partial/item_definition', [
+                                    'definition_data' => $industrial_waste['definition_data']['carrying_in_completion'],
+                                    'data_id' => $industrial_waste['id']
+                                ])
 
-                                <!--{include file='industrial_waste/partial/item_definition.blade.php' definition_data=$industrial_waste.definition_data.confirm_quantity data_id=$industrial_waste.id}-->
+                                @include('industrial_waste/partial/item_definition', [
+                                    'definition_data' => $industrial_waste['definition_data']['confirm_quantity'],
+                                    'data_id' => $industrial_waste['id']
+                                ])
 
-                                <!--{include file='industrial_waste/partial/item_definition.blade.php' definition_data=$industrial_waste.definition_data.disposal_completed data_id=$industrial_waste.id}-->
+                                @include('industrial_waste/partial/item_definition', [
+                                    'definition_data' => $industrial_waste['definition_data']['disposal_completed'],
+                                    'data_id' => $industrial_waste['id']
+                                ])
 
-                                <!--{include file='industrial_waste/partial/item_definition.blade.php' definition_data=$industrial_waste.definition_data.return_mf data_id=$industrial_waste.id}-->
+                                @include('industrial_waste/partial/item_definition', [
+                                    'definition_data' => $industrial_waste['definition_data']['return_mf'],
+                                    'data_id' => $industrial_waste['id']
+                                ])
 
                                 <td>
                                     <a href="/industrial_waste/copy?id={{$industrial_waste['id'] or ''}}" class="btn btn-success btn-flat btn-xs"><b><i class="fa fa-files-o margin-r-5"></i>複製</b></a>&nbsp;
@@ -191,7 +212,7 @@
                                 @forelse($industrial_wastes AS $industrial_waste)
                                 <tr>
                                     <td class="check"><input type="checkbox" name="industrial_waste_id" value="{{$industrial_waste['id']}}" class="minimal check"></td>
-                                    <td>{{ $industrial_waste['take_off_at'] or '' }}</td>
+                                    <td>{{ $industrial_waste['ticket_name'] or '' }}</td>
                                     <td class="text-left">{{ $industrial_waste['client_customer_name'] or '' }}</td>
                                     <td class="text-left">{{ $industrial_waste['ticket_name'] or '' }}</td>
                                     <td class="text-left">{{ $industrial_waste['manifest_no'] or '' }}</td>
@@ -222,7 +243,7 @@
             </div>
         </div>
     </div>
-    <!--{include file='partial/modal/industrial_waste/change_status.html'}-->
+    @include('partial/modal/industrial_waste/change_status')
     <!--{include file='partial/modal/select_date.html'
             title="CSVダウンロード"
             action="api/industrial_waste/csv"

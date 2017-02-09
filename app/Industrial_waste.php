@@ -33,7 +33,7 @@ class Industrial_waste extends Base_Model
 
         foreach($res_industrial_waste as $iw) {
             $res_industrial_waste[$iw->id]->definition_data = $this->_attach_status_definition($iw->status_bitmask, [
-                'type' => config('config.INDUSTRIAL_WASTE_TYPE')
+                'type' => config('config.INDUSTRIAL_WASTE_DEFINITION')
             ]);
         }
 

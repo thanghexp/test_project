@@ -270,15 +270,20 @@ var TEXIS = TEXIS || {};
             var type = $('input[name=type]', target_modal).val();
             var code = $('input[name=code]', target_modal).val();
             var target_id = $('input[name=id_target]', target_modal).val();
+            var token = $('input[name=_token]', target_modal).val();
 
             $.ajax({
+                'headers': {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                },
                 'type': 'POST',
                 'url': '/api/definition/change_status',
                 'data' : {
                     type: type,
                     code: code,
                     status : status,
-                    target_id: target_id
+                    target_id: target_id,
+                    _token: token
                 },
                 success: function (res) {
                     if (!res.submit || !res.success) {

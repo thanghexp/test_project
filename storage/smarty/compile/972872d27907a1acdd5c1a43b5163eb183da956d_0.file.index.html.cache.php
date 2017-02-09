@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:industrial_waste/partial/item_definition.blade.php' => 8,
     'file:partial/list_empty.html' => 2,
     'file:partial/pagination.blade.php' => 1,
-    'file:partial/modal/industrial_waste/change_status.html' => 1,
+    'file:partial/modal/industrial_waste/change_status.blade.php' => 1,
     'file:partial/modal/select_date.html' => 1,
   ),
 ),false)) {
@@ -309,7 +309,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
             </div>
         </div>
     </div>
-    <?php $_smarty_tpl->_subTemplateRender('file:partial/modal/industrial_waste/change_status.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array(), 0, false);
+    <?php $_smarty_tpl->_subTemplateRender('file:partial/modal/industrial_waste/change_status.blade.php', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 
     <?php $_smarty_tpl->_subTemplateRender('file:partial/modal/select_date.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, $_smarty_tpl->cache_lifetime, array('title'=>"CSVダウンロード",'action'=>"api/industrial_waste/csv",'search_field'=>$_smarty_tpl->tpl_vars['search_field']->value,'search_value'=>$_smarty_tpl->tpl_vars['search_value']->value,'order'=>$_smarty_tpl->tpl_vars['order']->value,'sort'=>$_smarty_tpl->tpl_vars['sort']->value), 0, false);
