@@ -38,6 +38,7 @@ Route::group(['prefix' => 'industrial_waste'], function() {
 
     Route::get('', 'Industrial_waste_controller@index');
     Route::get('create', 'Industrial_waste_controller@create');
+    Route::post('save_data', 'Industrial_waste_controller@save_data');
     Route::get('update', 'Industrial_waste_controller@update');
 });
 
@@ -47,6 +48,11 @@ $router->get('create', [
 ]);
 
 Route::group(['prefix' => 'api'], function() {
+    Route::post('industrial_waste/create', 'api\Industrial_waste@create');
     Route::post('definition/change_status', 'api\Definition@change_status');
+    Route::post('industrial_waste/delete', 'api\Industrial_waste@delete');
+    Route::post('industrial_waste/validation_csv', 'api\Industrial_waste@validation_csv');
+    Route::post('industrial_waste/csv', 'api\Industrial_waste@csv');
+
 });
 

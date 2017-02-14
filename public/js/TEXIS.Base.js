@@ -42,7 +42,7 @@ var TEXIS = TEXIS || {};
             var target = $(e.currentTarget);
 
             if (target.prev().hasClass('x-select2-search')) {
-                $('.select2-search').addClass('select2-search--dropdown-block');
+                $('.select2-search').addClass('select2-search--drop\-block');
             } else {
                 $('.select2-search').addClass('select2-search--dropdown-none');
             }

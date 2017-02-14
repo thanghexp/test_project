@@ -31,8 +31,10 @@ class Customer_controller extends AppController
         $data['title'] = 'Customer - List';
         $data['customers'] = $res_customer['data']['items'];
 
+        // Get total
         $total = !empty($res_customer['data']['total']) ? (int) $res_customer['data']['total'] : null;
 
+        // Set pagination to view
         $data['pagination'] = [
             'total' => (int) $total,
             'per_page' => ($total > $params) ? ($total % $params['limit'])  : 1,

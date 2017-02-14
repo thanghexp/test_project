@@ -199,6 +199,7 @@ class App_Model extends Model
 		$option = array_merge([
 			'status' => TRUE,
 			'submit' => TRUE,
+			'success' => TRUE,
 			'data' => !empty($data) ? $data : null
 		], $option);
 

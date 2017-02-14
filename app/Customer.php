@@ -54,7 +54,7 @@ class Customer extends Base_Model
      *
      * @return json
      */
-    public function get_data($params = [])
+    public function get_list_data($params = [])
     {
         DB::enableQueryLog();
 

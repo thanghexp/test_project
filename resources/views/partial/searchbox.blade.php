@@ -20,35 +20,35 @@
                     <div class="form-group">
                         
                         @if( !empty($page) && $page == 'industrial_waste' && !empty($industrial_waste_types) )
-                            <label class="col-lg-6 col-md-5 control-label">産廃種別：</label>
+                            <label class="col-lg-6 col-md-5 control-label">Type:</label>
                             <div class="col-lg-6 col-md-7">
 
                                 <select class="form-control select2 x-search-field" name="search_field">
-                                    <option value="">選択してください</option>
+                                    <option value="">Please select</option>
                                     @foreach( $industrial_waste_types AS $industrial_waste_type )
-                                    <option value="{{$industrial_waste_type['code']}}" <!--{if !empty($search_field) && $search_field == $industrial_waste_type.code}-->selected<!--{/if}-->><!--{$industrial_waste_type.value}--></option>
+                                    <option value="{{ $industrial_waste_type['code'] }}" @if( !empty($search_field) && $search_field == $industrial_waste_type['code'] ) selected @endif>{{ $industrial_waste_type['code'] or '' }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         @endif
                         @if( !empty($page) && $page == 'purchase' && !empty($purchase_types) )
-                            <label class="col-lg-6 col-md-5 control-label">仕入種別：</label>
+                            <label class="col-lg-6 col-md-5 control-label">Type：</label>
                             <div class="col-lg-6 col-md-7">
                                 <select class="form-control select2 x-search-field" name="search_field">
-                                    <option value="">選択してください</option>
+                                    <option value="">Please select</option>
                                     @foreach( $purchase_types AS $purchase_type )
-                                    <option value="{{ $purchase_type.code }}" <!--{if !empty($search_field) && $search_field == $purchase_type.code}-->selected<!--{/if}-->><!--{$purchase_type.value}--></option>
+                                    <option value="{{ $purchase_type['code'] }}" @if( !empty($search_field) && $search_field == $purchase_type['code']) selected @endif>{{ $purchase_type['code'] or '' }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         @endif
                         @if( !empty($page) && $page == 'sale' && !empty($product_types) )
-                            <label class="col-lg-6 col-md-5 control-label">仕入種別：</label>
+                            <label class="col-lg-6 col-md-5 control-label">Type：</label>
                             <div class="col-lg-6 col-md-7">
                                 <select class="form-control select2 x-search-field" name="search_field">
-                                    <option value="">選択してください</option>
+                                    <option value="">Please select</option>
                                     @foreach($product_types AS $product_type)
-                                    <option value="{{ $product_type.id }}" <!--{if !empty($search_field) && $search_field == $product_type.id}-->selected<!--{/if}-->><!--{$product_type.name}--></option>
+                                    <option value="{{ $product_type['id'] }}" @if( !empty($search_field) && $search_field == $product_type['id'] ) selected @endif>{{ $product_type['name'] or '' }}</option>
                                     @endforeach
                                 </select>
                             </div>

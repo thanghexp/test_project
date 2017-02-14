@@ -25,17 +25,19 @@
             <div class="box-body">
                 <div class="no-padding">
 
-                    <!--{include file="partial/searchbox.html" page="industrial_waste"
-                        view=$view
-                        config=$pagination
-                        search_field=$search_field
-                        search_value=$search_value
-                        industrial_waste_types=$industrial_waste_types
-                    }-->
+                    @include("partial/searchbox", [
+                        'page' => "industrial_waste",
+                        'view' => $view,
+                        'config' => $pagination,
+                        'search_field' => $search_field,
+                        'search_value' => $search_value,
+                        'industrial_waste_types' => $industrial_waste_types
+                    ])
 
                     {{--@include('partial/search', ['config' => $pagination])--}}
 
                     @if( empty($list_detail_page) )
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
                        <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -44,25 +46,25 @@
                                     <th class="text-center" style="min-width:120px">Ticket name
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'take_off_at' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'take_off_at' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="take_off_at"></a>
+                                             @if( $order == 'take_off_at' && $sort == 'ASC')sorting_asc
+                                             @elseif( $order == 'take_off_at' && $sort == 'DESC') sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="take_off_at"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:120px">Recipient name
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'customer' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'customer' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="customer"></a>
+                                             @if( $order == 'customer' && $sort == 'ASC' )sorting_asc
+                                             @elseif( $order == 'customer' && $sort == 'DESC' )sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="customer"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:120px">Project name
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'ticket_name' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'ticket_name' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="ticket_name"></a>
+                                             @if( $order == 'ticket_name' && $sort == 'ASC' )sorting_asc
+                                             @elseif( $order == 'ticket_name' && $sort == 'DESC' )sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="ticket_name"></a>
                                         </div>
                                     </th>
                                     <th class="text-center">To draw a decision</th>
@@ -151,57 +153,57 @@
                                     <th class="text-center" style="min-width:120px">Ticket name
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'take_off_at' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'take_off_at' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="take_off_at"></a>
+                                             @if( $order == 'take_off_at' && $sort == 'ASC')sorting_asc
+                                             @elseif( $order == 'take_off_at' && $sort == 'DESC')sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="take_off_at"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:120px">Recipient name
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'customer' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'customer' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="customer"></a>
+                                             @if( $order == 'customer' && $sort == 'ASC' )sorting_asc
+                                             @elseif( $order == 'customer' && $sort == 'DESC' )sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="customer"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:120px">Project name
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'ticket_name' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'ticket_name' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="ticket_name"></a>
+                                             @if( $order == 'ticket_name' && $sort == 'ASC')sorting_asc
+                                             @elseif( $order == 'ticket_name' && $sort == 'DESC')sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="ticket_name"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:190px">Manifest number
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'manifest_no' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'manifest_no' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="manifest_no"></a>
+                                             @if( $order == 'manifest_no' && $sort == 'ASC') sorting_asc
+                                             @elseif( $order == 'manifest_no' && $sort == 'DESC')sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="manifest_no"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:120px">Industrial waste type
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'type' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'type' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="type"></a>
+                                             @if( $order == 'type' && $sort == 'ASC')sorting_asc
+                                             @elseif( $order == 'type' && $sort == 'DESC')sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="type"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:120px">Acquisition quantity
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'quantity' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'quantity' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="quantity"></a>
+                                             @if( $order == 'quantity' && $sort == 'ASC')sorting_asc
+                                             @elseif( $order == 'quantity' && $sort == 'DESC')sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="quantity"></a>
                                         </div>
                                     </th>
                                     <th class="text-center" style="min-width:120px">Shipping company
                                         <div class="">
                                             <a class="sort
-                                             <!--{if $order == 'logistic_customer' && $sort == 'ASC'}-->sorting_asc
-                                             <!--{else if $order == 'logistic_customer' && $sort == 'DESC'}-->sorting_desc
-                                             <!--{else}-->sorting<!--{/if}-->" style="color:#4F5155" data-order="logistic_customer"></a>
+                                             @if( $order == 'logistic_customer' && $sort == 'ASC') sorting_asc
+                                             @elseif( $order == 'logistic_customer' && $sort == 'DESC') sorting_desc
+                                             @else sorting @endif" style="color:#4F5155" data-order="logistic_customer"></a>
                                         </div>
                                     </th>
                                     <th class="text-center">Action</th>
@@ -244,14 +246,14 @@
         </div>
     </div>
     @include('partial/modal/industrial_waste/change_status')
-    <!--{include file='partial/modal/select_date.html'
-            title="CSVダウンロード"
-            action="api/industrial_waste/csv"
-            search_field=$search_field
-            search_value=$search_value
-            order=$order
-            sort=$sort
-        }-->
+    @include('partial/modal/select_date', [
+            'title' => "CSVダウンロード",
+            'action' => "api/industrial_waste/csv",
+            'search_field' => $search_field,
+            'search_value' => $search_value,
+            'order' => $order,
+            'sort' => $sort
+        ])
 </div>
 @endsection
 

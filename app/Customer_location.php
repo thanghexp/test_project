@@ -49,6 +49,18 @@ class Customer_location extends Base_Model
     }
 
     /**
+     * Function to get customer location
+     *
+     * @param array $param
+     * @return array
+     */
+    public function get_list_data($params = []) {
+        $res_customer_locations = $this->get_list($params);
+
+        return $res_customer_locations;
+    }
+
+    /**
      * Function create customer location
      *
      * @param array $params
@@ -84,5 +96,9 @@ class Customer_location extends Base_Model
             'remark' => isset($params['remark']) ? $params['remark'] : null,
         ]);
 
+    }
+
+    public function build_response($data, $option = []) {
+        return get_object_vars($data);
     }
 }

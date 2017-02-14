@@ -188,6 +188,7 @@ var TEXIS = TEXIS || {};
                 });
             } else {
                 // Delete industrial waste of system
+
                 self.dialog({
                     title: "ステータス削除",
                     className: "dialog-danger",
@@ -206,7 +207,8 @@ var TEXIS = TEXIS || {};
                                     'type': 'post',
                                     'url': '/api/industrial_waste/delete',
                                     data: {
-                                        id: industrial_waste_ids
+                                        id: industrial_waste_ids,
+                                        _token: $('input[name=_token]').val()
                                     },
                                     success: function (res) {
                                         if (!res.success || !res.submit) {
@@ -245,10 +247,11 @@ var TEXIS = TEXIS || {};
                 url: '/api/industrial_waste/validation_csv',
                 data: {
                     date_from: date_from.val(),
-                    date_to: date_to.val()
+                    date_to: date_to.val(),
+                    _token: $('input[name=_token]').val()
                 },
                 success: function (res) {
-                    // Handle error
+                    //Handle error
                     if (!res.submit || !res.success) {
                         // Delete error old
                         $('.help-block').remove();
@@ -264,7 +267,6 @@ var TEXIS = TEXIS || {};
                         $(window).off('beforeunload');
                         el_form_csv.submit();
                     }
-
                     return;
                 }
             });

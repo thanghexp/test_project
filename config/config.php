@@ -24,5 +24,22 @@ return [
     // BUILD DEFINITION
     'INDUSTRIAL_WASTE_DEFINITION' => env('INDUSTRIAL_WASTE_DEFINITION', 'industrial_waste_definition'),
     'PURCHASE_DEFINITION' => env('PURCHASE_DEFINITION', 'purchase_definition'),
-    'SALE_DEFINITION' => env('SALE_DEFINITION', 'sale_definition')
+    'SALE_DEFINITION' => env('SALE_DEFINITION', 'sale_definition'),
+
+    // BUILD MASTER CATALOG
+    'INDUSTRIAL_WASTE' => env('INDUSTRIAL_WASTE', 'industrial_waste'),
+    'PURCHASE' => env('PURCHASE', 'purchase'),
+    'SALE' => env('SALE', 'sale'),
+
+    // BUILD MASTER CATALOG MODEL
+    'INDUSTRIAL_WASTE_MODEL' => env('INDUSTRIAL_WASTE_MODEL', 'industrial_waste_model'),
+    'PURCHASE_MODEL' => env('PURCHASE_MODEL', 'purchase_model'),
+    'SALE_MODEL' => env('SALE_MODEL', 'sale_model'),
+
+    // BUILD UNIT
+    'INDUSTRIAL_WASTE_UNIT' => env('INDUSTRIAL_WASTE_UNIT', 'industrial_waste_model'),
+
+    // BUILD METHOD DISPOSAL
+    'INDSUSTIAL_WASTE_METHOD_DISPOSAL' => env('INDUSTRIAL_WASTE_METHOD_DISPOSAL', 'industrial_waste_method_disposal'),
+
 ];

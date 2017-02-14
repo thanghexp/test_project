@@ -18,6 +18,46 @@ class Base_Model extends App_Model
     }
 
     /**
+     * Function to export csv
+     *
+     * @param array $data
+     * @param array $schema
+     *
+     * @return
+     */
+    public function export_csv($data = [])
+    {
+        // output headers so that the file is downloaded rather than displayed
+        header('Content-type: text/csv');
+        header(sprintf('Content-Disposition: attachment; filename="%s"', $this->name_csv));
+
+        // do not cache the file
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        // create a file pointer connected to the output stream
+        $file = fopen('php://output', 'w');
+
+        $schema = $this->_schema();
+
+        // send the column headers
+        fputcsv($file, $schema);
+
+        // output each row of the data
+        if(!empty($data)) {
+            foreach ($data as $item) {
+                $row = [];
+                foreach($schema as $header) {
+                    $row[$header] = !empty($item[$header]) ? $item[$header] : '';
+                }
+                fputcsv($file, $row);
+            }
+        }
+
+        //exit();
+    }
+
+    /**
      * Function get list value type of catalog
      *
      * @param string $param
@@ -194,44 +234,42 @@ class Base_Model extends App_Model
 
     }
 
+
     /**
-     * Function definition
+     * Function build definition
      *
      * @param string $status_bitmask
      * @param array $option
      *
-     * @return Array
+     * @return array
      */
-    public function _attach_status_definition($status_bitmask, $option = [])
+    public function build_definition_data($status_bitmask, $option = [])
     {
         // Load model
         $master_catalog_model = new \App\Master_catalog();
 
-        // Check empty when type
-        if(empty($option['type'])) return [];
+        if(empty($option['type'])) return null;
 
-        /** @var object $res_master_catalog Get list master catalog from model */
-        $res_status_definition = $master_catalog_model->_get_value_master_catalog([
-            'type' => $option['type']
-        ]);
-
-        // Check condition result status definition is empty
-        if(empty($res_status_definition)) return [];
+        /** @var Object $res_definition Get list master catlog */
+        $res_definition = $master_catalog_model->get_value_master_catalog($option);
 
         // Handle definition status
         $data_definition = [];
-        array_map(function($v) use( $status_bitmask, & $data_definition ) {
+        array_map(function($v) use(& $status_bitmask, & $data_definition ) {
             for($i = 0; $i < strlen($status_bitmask); $i++) {
-                if($i + 1 == $v->ordering ) {
+                if ($i + 1 == $v->ordering) {
                     $data_definition[$v->code] = $v;
-                    $data_definition[$v->code]->status = (int) $status_bitmask[$i];
+                    $data_definition[$v->code]->status = (int)$status_bitmask[$i];
+
                     break;
                 }
             }
-        }, $res_status_definition);
+        }, $res_definition);
 
         return $data_definition;
     }
+
+
 
     /**
      * Function attach info account
@@ -258,36 +296,6 @@ class Base_Model extends App_Model
 
         $res_customer_contact = $data_account;
     }
-
-    /**
-     * Function build data of IW,SA,PU to type definition
-     *
-     * @param array $data_definition
-     * @param array $options
-     *
-     * @return array
-     */
-    public function build_definition_data($data_definition, $options = [])
-    {
-        // Check condition empty
-//        if(empty($data_definition)) return [];
-//
-//        $data = [];
-//        foreach($data_definition AS $value) {
-//            $data[$value->]
-//        }
-//
-//        $data_definition = [];
-//        foreach($data_definition AS $value) {
-//            $value
-//        }
-//
-//        echo '<pre>';
-//        print_r($data_definition); die;
-
-    }
-
-
 
     /**
      * Function build response customer
@@ -390,13 +398,33 @@ class Base_Model extends App_Model
             'client_customer_id' => !empty($data->client_customer_id) ? $data->client_customer_id : null,
             'client_customer_name' => !empty($data->client_customer_name) ? $data->client_customer_name : null,
             'manifest_no' => !empty($data->manifest_no) ? $data->manifest_no : null,
+            'manifest_issue_date' => !empty($data->manifest_issue_date) ? $data->manifest_issue_date : null,
+            'quantity' => !empty($data->quantity) ? $data->quantity : null,
+            'unit' => !empty($data->unit) ? $data->unit : null,
+            'unit_price' => !empty($data->unit_price) ? $data->unit_price : null,
+            'quantity_in_box' => !empty($data->quantity_in_box) ? $data->quantity_in_box : null,
+            'quantity_total_box' => !empty($data->quantity_total_box) ? $data->quantity_total_box : null,
+            'disposal' => !empty($data->disposal) ? $data->disposal : null,
+
             'type' => !empty($data->type) ? $data->type : null,
             'type_name' => !empty($data->type_name) ? $data->type_name : null,
             'logistic_customer_id' => !empty($data->logistic_customer_id) ? $data->logistic_customer_id : null,
             'logistic_customer_name' => !empty($data->logistic_customer_name) ? $data->logistic_customer_name : null,
-            'quantity' => !empty($data->quantity) ? $data->quantity : null,
-            'unit' => !empty($data->unit) ? $data->unit : null,
-            'definition_data' => !empty($data->definition_data) ? $data->definition_data : null
+            'method_deliver' => !empty($data->method_deliver) ? $data->method_deliver : null,
+            'freight_rate' => !empty($data->freight_rate) ? $data->freight_rate : null,
+            'freight_rate_original' => !empty($data->freight_rate_original) ? $data->freight_rate_original : null,
+            'take_off_time' => !empty($data->take_off_time) ? $data->take_off_time : null,
+
+            'car_number' => !empty($data->car_number) ? $data->car_number : null,
+            'driver_name' => !empty($data->driver_name) ? $data->driver_name : null,
+            'take_off_note' => !empty($data->take_off_note) ? $data->take_off_note : null,
+            'installation_at' => !empty($data->installation_at) ? $data->installation_at : null,
+            'box_number' => !empty($data->box_number) ? $data->box_number : null,
+            'completed_at' => !empty($data->completed_at) ? $data->completed_at : null,
+            'loading_place' => !empty($data->loading_place) ? $data->loading_place : null,
+            'definition_data' => !empty($data->definition_data) ? $data->definition_data : null,
+
+            'loading_location_remasks' => !empty($data->loading_location_remasks) ? $data->loading_location_remasks : null
         ];
 
         // Return
@@ -436,5 +464,12 @@ class Base_Model extends App_Model
         // Returm
         return !empty($data_customer_type) ? $data_customer_type : [];
     }
+
+    /**
+     * Function common to build response
+     *
+     * @param
+     */
+
 
 }
