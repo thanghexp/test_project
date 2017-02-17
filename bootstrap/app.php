@@ -41,6 +41,11 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+//$app->register(
+//    \Barryvdh\DomPDF\ServiceProvider::class
+//);
+
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

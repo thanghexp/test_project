@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Excel;
+use Carbon\Carbon;
+
 
 class Industrial_waste_controller extends AppController
 {
@@ -63,18 +65,26 @@ class Industrial_waste_controller extends AppController
 	 *
 	 * @return Array
 	 */
-	public function create() {
+	public function create(Request $request)
+	{
+		if($request->isMethod('POST') == TRUE) {
+			// Load model
+			$industrial_waste_model = new \App\Industrial_waste();
+
+			$industrial_waste_model->save_records($request->all());
+		}
+
 		// Load model
 		$master_catalog_model = new \App\Master_catalog();
 		$customer_model = new \App\Customer();
 		$customer_location_model = new \App\Customer_location();
 
 		$data['industrial_waste_type'] = $master_catalog_model->get_value_master_catalog([
-			'type' => config('config.INDSUTRIAL_WASTE_TYPE')
+			'type' => config('config.INDUSTRIAL_WASTE_TYPE')
 		]);
 
 		$data['industrial_waste_status'] = $master_catalog_model->get_value_master_catalog([
-			'type' => config('config.INDSUTRIAL_WASTE_STATUS')
+			'type' => config('config.INDUSTRIAL_WASTE_STATUS')
 		]);
 
 		$data['industrial_waste_method_disposal'] = $master_catalog_model->get_value_master_catalog([
@@ -85,19 +95,53 @@ class Industrial_waste_controller extends AppController
 			'type' => config('config.INDUSTRIAL_WASTE_UNIT')
 		]);
 
-		$client_customer_bussiness = $customer_model->get_list_data()->getData(TRUE);
+		/** @var array $client_customer_business Get list customer of customer model */
+		$client_customer_business = $customer_model->get_list_data()->getData(TRUE);
+
+		/** @var array $client_customer_location Get list location of customer location model */
 		$client_customer_location = $customer_location_model->get_list_data();
 
-		$data['client_customer_business'] = !empty($client_customer_business) ? $client_customer_bussiness['data']['items'] : '';
-		$data['client_customer_location'] = !empty($client_customer_location) ? $client_customer_location : '';
+		$data['client_customer_business'] = !empty($client_customer_business) ? $client_customer_business['data']['items'] : [];
+		$data['client_customer_location'] = !empty($client_customer_location) ? $client_customer_location : [];
 
-		$data['logistic_customer_business'] = !empty($client_customer_business) ? $client_customer_bussiness['data']['items'] : '';
-		$data['logistic_customer_business'] = $customer_model->get_list_data();
+		$data['logistic_customer_business'] = !empty($client_customer_business) ? $client_customer_business['data']['items'] : '';
+		$data['logistic_customer_location'] = !empty($client_customer_location) ? $client_customer_location : [];
 
 		$data['title'] = 'Create/Update Industrial Waste';
 		$data['page'] = 'Create/Update industrial_waste';
 
 		return view('industrial_waste.create', $data);
+	}
+
+	/**
+	 * Function to get detail
+	 *
+	 * @param integer $id
+	 *
+	 * @return
+	 */
+	public function detail($id = 0)
+	{
+		// Load model
+		$industrial_waste_model = new \App\Industrial_waste();
+
+		$data['data_industrial_waste'] = $industrial_waste_model->find((int)$id);
+
+		$data['title'] = 'Detail Industrial Waste';
+		$data['page'] = 'Detail Industrial Waste';
+		return view('industrial_waste.detail', $data);
+	}
+
+	/**
+	 * Function to save register/update
+	 *
+	 * @param \App\Httt\Request
+	 *
+	 * @return Array
+	 */
+	public function save_data(Request $request)
+	{
+
 	}
 
 }

@@ -27,6 +27,6 @@ return [
 	'escape_html' => false,
     
     // 自定义分界符
-    'left_delimiter' => '<!--{',
-    'right_delimiter' => '}-->',
+	'left_delimiter' => '{',
+	'right_delimiter' => '}',
 ];

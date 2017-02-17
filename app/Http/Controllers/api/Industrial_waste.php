@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Excel;
+use Barryvdh\DomPDF\PDF;
 
 class Industrial_waste extends Controller
 {
@@ -51,4 +52,24 @@ class Industrial_waste extends Controller
 
         return $industrial_waste_model->download_csv($request->all());
     }
+
+    /**
+     * Function to handle model contact detail
+     */
+    public function handle_contact_detail(Request $request) {
+        $params = $request->all();
+
+        if(empty($params)) return;
+
+        // Load model
+        $industrial_waste_model = new \App\Industrial_waste();
+
+        switch($params['method']) {
+            case 'pdf': return $industrial_waste_model->export_pdf($params); break;
+            case 'email': $industrial_waste_model->export_email($params); break;
+            case 'fax': $industrial_waste_model->export_fax($params); break;
+        }
+
+    }
+
 }

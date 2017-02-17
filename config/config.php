@@ -40,6 +40,8 @@ return [
     'INDUSTRIAL_WASTE_UNIT' => env('INDUSTRIAL_WASTE_UNIT', 'industrial_waste_model'),
 
     // BUILD METHOD DISPOSAL
-    'INDSUSTIAL_WASTE_METHOD_DISPOSAL' => env('INDUSTRIAL_WASTE_METHOD_DISPOSAL', 'industrial_waste_method_disposal'),
+    'INDUSTRIAL_WASTE_METHOD_DISPOSAL' => env('INDUSTRIAL_WASTE_METHOD_DISPOSAL', 'industrial_waste_method_disposal'),
 
+    // BUILD STATUS
+    'INDUSTRIAL_WASTE_STATUS' => env('INDUSTRIAL_WASTE_STATUS', 'industrial_waste_status')
 ];

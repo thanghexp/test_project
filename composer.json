@@ -10,7 +10,10 @@
         "ytake/laravel-smarty": "^2.1",
         "latrell/smarty": "dev-master",
         "predis/predis": "^1.1",
-        "maatwebsite/excel": "~2.1.0"
+        "maatwebsite/excel": "~2.1.0",
+        "barryvdh/laravel-dompdf": "^0.7.1",
+        "guzzlehttp/guzzle": "~5.0"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
